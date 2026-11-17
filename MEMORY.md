@@ -7,6 +7,7 @@ Memoria del proyecto entre sesiones. Máximo ~50 líneas: resume o elimina lo qu
 - Home, Calendario, Match Center y Temporada consumen repositorios live con fallback a mock.
 - PWA instalable con manifest, service worker propio, offline, aviso de actualización e instalación guiada en iOS.
 - Deploy en producción: https://mundo-river.vercel.app (proyecto `devdesdecero0/mundo-river`); manifest, SW y offline verificados sobre la URL pública.
+- Vercel Production tiene `BZZOIRO_TOKEN` y `DATA_MODE=live` como secretos; la producción fue redeployada y verificada con noticias RSS actuales y partidos reales.
 - Suite: 192 tests unitarios y 26 E2E en verde; lint, typecheck y build limpios.
 - Detalle real validado: `/partidos/bzzoiro:event:654311` (River vs Lanús, 22/11/2026) muestra previa, formaciones y calificaciones.
 
@@ -46,7 +47,7 @@ Memoria del proyecto entre sesiones. Máximo ~50 líneas: resume o elimina lo qu
 - `vercel login <email>` está deprecado: el flujo actual es dispositivo (`https://vercel.com/oauth/device?user_code=...`).
 
 ## Próximos pasos
-- Cargar `BZZOIRO_TOKEN` y `NEWS_FEEDS` en Vercel (Settings → Environment Variables) y redeployar; sin token el sitio usa mock.
+- `NEWS_FEEDS` no es necesario por ahora: usa el feed Google News predeterminado; se puede sobrescribir en Vercel si se agregan fuentes.
 - Repo GitHub publicado: https://github.com/devdesdecero0-oss/Mundo-River.git, rama `main`, commit inicial `1f607b4`.
 - E2E corre en modo mock vía `playwright.config.ts`; no requiere variables externas.
 - Evaluar T122 (`pnpm data:snapshot`) y T123 (aviso no bloqueante de fallback) si se priorizan.
