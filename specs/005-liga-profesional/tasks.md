@@ -24,3 +24,4 @@ metodologia: TDD — test primero, implementación después
 - Implementación completa: página `/liga-profesional`, tabla anual de fases regulares, grupo oficial de River, navegación, sitemap y fallback mock.
 - La API confirmada de Bzzoiro es `GET /leagues/85/standings/`; la tabla anual se calcula paginando `events/?league_id=85&season_id=...` y excluyendo playoffs.
 - Verificación local: 198 tests unitarios, 28 E2E, lint, typecheck y build en verde.
+- Deploy verificado en producción: `https://mundo-river.vercel.app/liga-profesional`; muestra dos tablas reales, River en 7.º lugar con 55 puntos en la tabla anual y en `Clausura, Grupo B`.
