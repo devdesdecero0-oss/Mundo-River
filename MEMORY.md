@@ -10,7 +10,8 @@ Memoria del proyecto entre sesiones. Máximo ~50 líneas: resume o elimina lo qu
 - Vercel Production tiene `BZZOIRO_TOKEN` y `DATA_MODE=live` como secretos; la producción fue redeployada y verificada con noticias RSS actuales y partidos reales.
 - Liga Profesional: `/liga-profesional` muestra tabla anual de fases regulares y grupo oficial de River desde Bzzoiro (`/leagues/85/standings/`); la tabla anual pagina todos los eventos de la liga y excluye playoffs.
 - Producción verificada: tabla anual con 30 equipos y River en 7.º con 55 puntos; grupo detectado automáticamente como `Clausura, Grupo B`.
-- Suite: 198 tests unitarios y 28 E2E en verde; lint, typecheck y build limpios.
+- Calendario: las fechas y partidos abren un panel contextual con todos los encuentros del día; la selección se refleja en `?partido=<id>`, respetando estados, sede, hora local, resultado, motivo y minuto en vivo.
+- Suite: 203 tests unitarios y 32 E2E en verde; lint, typecheck y build limpios.
 - Detalle real validado: `/partidos/bzzoiro:event:654311` (River vs Lanús, 22/11/2026) muestra previa, formaciones y calificaciones.
 
 ## Decisiones

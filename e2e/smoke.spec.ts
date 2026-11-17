@@ -40,6 +40,34 @@ test.describe("Flujos críticos de Mundo River", () => {
     await expect(page).toHaveURL(/comp=libertadores-2026/);
   });
 
+  test("calendario abre el detalle contextual y sincroniza el partido", async ({ page }) => {
+    await page.goto("/calendario?vista=agenda");
+
+    await page.getByRole("button", { name: /River Plate.*Boca Juniors/ }).first().click();
+
+    await expect(page).toHaveURL(/partido=vs-boca-liga/);
+    const dialog = page.getByRole("dialog");
+    await expect(dialog).toBeVisible();
+    await expect(dialog.getByRole("heading", { name: /Partidos del/ })).toBeVisible();
+    await expect(dialog.getByText("Más Monumental").first()).toBeVisible();
+    await expect(dialog.getByText("2 - 1")).toBeVisible();
+
+    await page.keyboard.press("Escape");
+    await expect(dialog).toBeHidden();
+    await expect(page).not.toHaveURL(/partido=/);
+  });
+
+  test("calendario muestra el motivo de un partido aplazado", async ({ page }) => {
+    await page.goto("/calendario?vista=agenda");
+
+    await page.getByRole("button", { name: /River Plate.*Gimnasia/ }).click();
+
+    const dialog = page.getByRole("dialog");
+    await expect(dialog).toBeVisible();
+    await expect(dialog.getByText("Aplazado")).toBeVisible();
+    await expect(dialog.getByText("Reprogramado por la organización del torneo.")).toBeVisible();
+  });
+
   test("Match Center abre calificaciones y ordena por puesto", async ({ page }) => {
     await page.goto("/partidos/vs-boca-liga");
 

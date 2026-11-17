@@ -1,9 +1,9 @@
 "use client";
 
-import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { TeamBadge } from "@/components/brand/team-badge";
+import { CalendarMatchDetail } from "@/components/calendar/calendar-match-detail";
 import { useNow, useTimeZone } from "@/components/providers/time-zone-provider";
 import { LocalDayHeader } from "@/components/ui/local-date";
 import { MatchStatusBadge } from "@/components/ui/match-status-badge";
@@ -72,6 +72,7 @@ export function CalendarView({
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
+  const selectedMatchId = searchParams.get("partido");
 
   const [view, setView] = useState<View>(() => (searchParams.get("vista") === "agenda" ? "agenda" : "mes"));
   const [competition, setCompetition] = useState<string>(() => {
@@ -104,10 +105,13 @@ export function CalendarView({
     if (status !== "all") params.set("estado", status);
     if (view === "agenda") params.set("vista", "agenda");
     if (month !== currentMonth) params.set("mes", month);
+    if (selectedMatchId && matches.some((match) => match.id === selectedMatchId)) {
+      params.set("partido", selectedMatchId);
+    }
     const nextUrl = params.toString() ? `${pathname}?${params.toString()}` : pathname;
     const currentUrl = searchParams.toString() ? `${pathname}?${searchParams.toString()}` : pathname;
     if (nextUrl !== currentUrl) router.replace(nextUrl, { scroll: false });
-  }, [competition, status, view, month, currentMonth, pathname, router, searchParams]);
+  }, [competition, status, view, month, currentMonth, pathname, router, searchParams, selectedMatchId, matches]);
 
   const filterByStatus = (match: Match): boolean => {
     if (status === "all") return true;
@@ -148,6 +152,29 @@ export function CalendarView({
   const availableCompetitions = competitions.filter((item) =>
     matches.some((match) => match.competitionId === item.id),
   );
+  const selectedMatch = selectedMatchId
+    ? inCompetition.find((match) => match.id === selectedMatchId) ?? null
+    : null;
+  const selectedDateMatches = selectedMatch
+    ? inCompetition.filter(
+        (match) =>
+          toLocalDateKey(match.kickoffAt, timeZone) ===
+          toLocalDateKey(selectedMatch.kickoffAt, timeZone),
+      )
+    : [];
+
+  function openMatchDetail(match: Match) {
+    const params = new URLSearchParams(searchParams.toString());
+    params.set("partido", match.id);
+    router.replace(`${pathname}?${params.toString()}`, { scroll: false });
+  }
+
+  function closeMatchDetail() {
+    const params = new URLSearchParams(searchParams.toString());
+    params.delete("partido");
+    const query = params.toString();
+    router.replace(query ? `${pathname}?${query}` : pathname, { scroll: false });
+  }
 
   function resetFilters() {
     setCompetition("all");
@@ -303,13 +330,26 @@ export function CalendarView({
                   } ${isToday ? "bg-river-soft/60" : ""}`}
                 >
                   <div className="flex items-center justify-between">
-                    <span
-                      className={`inline-flex h-5 w-5 items-center justify-center rounded-full text-[0.68rem] font-bold sm:h-6 sm:w-6 sm:text-xs ${
-                        isToday ? "bg-river text-white" : cell.inMonth ? "text-ink" : "text-ink-muted/80"
-                      }`}
-                    >
-                      {Number(cell.dateKey.slice(-2))}
-                    </span>
+                    {dayMatches.length > 0 ? (
+                      <button
+                        type="button"
+                        onClick={() => openMatchDetail(dayMatches[0]!)}
+                        className={`inline-flex h-5 w-5 items-center justify-center rounded-full text-[0.68rem] font-bold outline-none focus-visible:ring-2 focus-visible:ring-river sm:h-6 sm:w-6 sm:text-xs ${
+                          isToday ? "bg-river text-white" : cell.inMonth ? "text-ink" : "text-ink-muted/80"
+                        }`}
+                        aria-label={`Ver partidos del ${cell.dateKey}`}
+                      >
+                        {Number(cell.dateKey.slice(-2))}
+                      </button>
+                    ) : (
+                      <span
+                        className={`inline-flex h-5 w-5 items-center justify-center rounded-full text-[0.68rem] font-bold sm:h-6 sm:w-6 sm:text-xs ${
+                          isToday ? "bg-river text-white" : cell.inMonth ? "text-ink" : "text-ink-muted/80"
+                        }`}
+                      >
+                        {Number(cell.dateKey.slice(-2))}
+                      </span>
+                    )}
                     {dayMatches.length > 0 ? (
                       <span className="text-[0.55rem] font-bold text-ink-muted md:hidden">{dayMatches.length}</span>
                     ) : null}
@@ -319,9 +359,10 @@ export function CalendarView({
                     {dayMatches.slice(0, 2).map((match) => {
                       const matchStatus = deriveMatchStatus(match, now);
                       return (
-                        <Link
+                        <button
                           key={match.id}
-                          href={`/partidos/${match.id}`}
+                          type="button"
+                          onClick={() => openMatchDetail(match)}
                           className={`block rounded border-l-2 px-1 py-0.5 text-[0.62rem] font-semibold leading-tight transition-colors ${accent(matchStatus)}`}
                           aria-label={`${teamById.get(match.homeTeamId)?.name ?? "River"} vs ${teamById.get(match.awayTeamId)?.name ?? "Rival"}`}
                         >
@@ -337,13 +378,17 @@ export function CalendarView({
                               {match.score ? `${match.score.home}-${match.score.away}` : "vs"}
                             </span>
                           </span>
-                        </Link>
+                        </button>
                       );
                     })}
                     {dayMatches.length > 2 ? (
-                      <Link href="/calendario?vista=agenda" className="text-[0.6rem] font-bold uppercase text-river-ink hover:underline">
+                      <button
+                        type="button"
+                          onClick={() => openMatchDetail(dayMatches[2]!)}
+                        className="text-[0.6rem] font-bold uppercase text-river-ink hover:underline"
+                      >
                         +{dayMatches.length - 2} más
-                      </Link>
+                      </button>
                     ) : null}
                   </div>
 
@@ -388,10 +433,11 @@ export function CalendarView({
                   const away = teamById.get(match.awayTeamId);
                   const competition = competitions.find((item) => item.id === match.competitionId);
                   return (
-                    <Link
+                    <button
                       key={match.id}
-                      href={`/partidos/${match.id}`}
-                      className="group grid grid-cols-[3.3rem_1fr_auto] items-center gap-3 p-3 transition-colors hover:bg-paper sm:grid-cols-[4.5rem_1fr_auto] sm:p-4"
+                      type="button"
+                      onClick={() => openMatchDetail(match)}
+                      className="group grid w-full grid-cols-[3.3rem_1fr_auto] items-center gap-3 p-3 text-left transition-colors hover:bg-paper sm:grid-cols-[4.5rem_1fr_auto] sm:p-4"
                     >
                       <div className="text-center">
                         <span className="block font-display text-lg font-bold tabular-nums">
@@ -426,7 +472,7 @@ export function CalendarView({
                         <MatchStatusBadge status={matchStatus} minute={minute} size="sm" />
                         <span className="text-river-ink transition-transform group-hover:translate-x-1" aria-hidden="true">→</span>
                       </div>
-                    </Link>
+                    </button>
                   );
                 })}
               </div>
@@ -434,6 +480,18 @@ export function CalendarView({
           ))}
         </div>
       )}
+
+      {selectedMatch && selectedDateMatches.length > 0 ? (
+        <CalendarMatchDetail
+          matches={selectedDateMatches}
+          teams={teams}
+          competitions={competitions}
+          now={now}
+          timeZone={timeZone}
+          selectedMatchId={selectedMatch.id}
+          onClose={closeMatchDetail}
+        />
+      ) : null}
     </div>
   );
 }
