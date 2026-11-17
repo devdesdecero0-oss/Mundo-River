@@ -117,6 +117,19 @@ test.describe("Flujos críticos de Mundo River", () => {
     await expect(page.getByText("River Plate").first()).toBeVisible();
   });
 
+  test("plantel muestra puntajes y permite elegir un Match Center evaluado", async ({ page }) => {
+    await page.goto("/plantel");
+
+    await expect(page.getByRole("heading", { name: "El plantel", exact: true })).toBeVisible();
+    await expect(page.getByRole("heading", { name: "Puntaje del plantel" })).toBeVisible();
+    await expect(page.getByText("Puntaje").first()).toBeVisible();
+    await expect(page.getByText(/\/10|SC/).first()).toBeVisible();
+
+    const firstRatedPlayer = page.locator("article").filter({ hasText: "Ver partidos" }).first();
+    await firstRatedPlayer.getByText("Ver partidos").click();
+    await expect(firstRatedPlayer.getByRole("link").first()).toBeVisible();
+  });
+
   test("una ruta inexistente muestra el estado 404 con accesos", async ({ page }) => {
     await page.goto("/partidos/no-existe");
 

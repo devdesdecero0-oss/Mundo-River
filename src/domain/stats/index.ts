@@ -20,3 +20,7 @@ export {
   formatRating,
   ratingTone,
 } from "./ratings";
+export {
+  buildSquadPerformance,
+  type SquadPerformance,
+} from "./squad-performance";

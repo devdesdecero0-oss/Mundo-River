@@ -3,6 +3,7 @@ export const NAV_ITEMS = [
   { href: "/novedades", label: "Novedades" },
   { href: "/calendario", label: "Calendario" },
   { href: "/liga-profesional", label: "Liga Profesional" },
+  { href: "/plantel", label: "Plantel" },
   { href: "/temporada", label: "Temporada" },
 ] as const;
 

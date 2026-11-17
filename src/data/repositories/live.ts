@@ -57,7 +57,7 @@ import { mapStandingGroups } from "@/data/providers/bzzoiro/standings";
 const MATCHES_TTL = 5 * 60_000;
 const SQUAD_TTL = 6 * 60 * 60_000;
 const LIVE_REVALIDATE = 20;
-const FINISHED_REVALIDATE = 60 * 60;
+const FINISHED_REVALIDATE = 5 * 60;
 const LEAGUE_REVALIDATE = 6 * 60 * 60;
 const VENUE_REVALIDATE = 24 * 60 * 60;
 const LIGA_PROFESIONAL_ID = 85;
