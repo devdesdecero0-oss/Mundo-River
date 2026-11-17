@@ -7,6 +7,7 @@ import type {
 
 export function isFinishedMatch(match: Match): boolean {
   return (
+    match.providerStatus === "finished" ||
     match.statusOverride === "finished" ||
     (match.score !== undefined && match.finishedAt !== undefined)
   );

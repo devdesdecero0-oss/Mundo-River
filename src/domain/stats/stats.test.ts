@@ -9,6 +9,7 @@ import {
   computeSeasonRecord,
   computeSplit,
   formatRating,
+  isFinishedMatch,
   normalizeRating,
   ratingTone,
   selectMvp,
@@ -195,6 +196,30 @@ describe("R-RECORD — registro de temporada", () => {
       points: 10,
       effectiveness: 66.7,
       winRate: 60,
+    });
+  });
+
+  it("reconoce como finalizado un partido del proveedor con providerStatus finished", () => {
+    const providerMatch = makeMatch({
+      id: "bzzoiro:event:123",
+      homeTeamId: RIVER_ID,
+      awayTeamId: "rival",
+      providerStatus: "finished",
+      score: { home: 2, away: 1 },
+    });
+
+    expect(isFinishedMatch(providerMatch)).toBe(true);
+    expect(computeSeasonRecord([providerMatch], RIVER_ID)).toMatchObject({
+      played: 1,
+      won: 1,
+      goalsFor: 2,
+      goalsAgainst: 1,
+      points: 3,
+    });
+    expect(computeForm([providerMatch], RIVER_ID)).toEqual(["W"]);
+    expect(computeSplit([providerMatch], RIVER_ID).home).toMatchObject({
+      played: 1,
+      won: 1,
     });
   });
 

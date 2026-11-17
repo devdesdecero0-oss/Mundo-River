@@ -8,7 +8,7 @@ Memoria del proyecto entre sesiones. Máximo ~50 líneas: resume o elimina lo qu
 - PWA instalable con manifest, service worker propio, offline, aviso de actualización e instalación guiada en iOS.
 - Deploy en producción: https://mundo-river.vercel.app (proyecto `devdesdecero0/mundo-river`); manifest, SW y offline verificados sobre la URL pública.
 - Vercel Production tiene `BZZOIRO_TOKEN` y `DATA_MODE=live` como secretos; la producción fue redeployada y verificada con noticias RSS actuales y partidos reales.
-- Suite: 192 tests unitarios y 26 E2E en verde; lint, typecheck y build limpios.
+- Suite: 193 tests unitarios y 26 E2E en verde; lint, typecheck y build limpios.
 - Detalle real validado: `/partidos/bzzoiro:event:654311` (River vs Lanús, 22/11/2026) muestra previa, formaciones y calificaciones.
 
 ## Decisiones
@@ -45,6 +45,8 @@ Memoria del proyecto entre sesiones. Máximo ~50 líneas: resume o elimina lo qu
 - Instalar la PWA requiere HTTPS; `http://192.168.x.x` no registra service worker (`localhost` es la excepción).
 - `vercel deploy --temporary` falla en Windows (EPERM al crear symlinks del builder local); con login, `vercel --prod` compila en la nube y funciona.
 - `vercel login <email>` está deprecado: el flujo actual es dispositivo (`https://vercel.com/oauth/device?user_code=...`).
+- `isFinishedMatch` también debe reconocer `providerStatus === "finished"`; Bzzoiro no siempre envía `statusOverride` ni `finishedAt`.
+- No ejecutar `pnpm build` y Playwright en paralelo: ambos usan `.next` y pueden corromper el artefacto de compilación.
 
 ## Próximos pasos
 - `NEWS_FEEDS` no es necesario por ahora: usa el feed Google News predeterminado; se puede sobrescribir en Vercel si se agregan fuentes.
