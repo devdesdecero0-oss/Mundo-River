@@ -2,6 +2,7 @@ export const NAV_ITEMS = [
   { href: "/", label: "Inicio" },
   { href: "/novedades", label: "Novedades" },
   { href: "/calendario", label: "Calendario" },
+  { href: "/liga-profesional", label: "Liga Profesional" },
   { href: "/temporada", label: "Temporada" },
 ] as const;
 

@@ -7,6 +7,7 @@ import type {
   SquadSnapshot,
   Team,
 } from "@/domain/types";
+import type { LigaProfesionalStandings } from "@/domain/standings";
 
 /**
  * Contratos de repositorio. La UI consume estas interfaces, nunca los
@@ -21,6 +22,10 @@ export interface MatchesRepository {
   getMatchPlayerStats(matchId: string): Promise<PlayerMatchStats[]>;
   /** Estadísticas de todos los partidos en una sola llamada (evita N+1 en temporada). */
   listPlayerStats(): Promise<PlayerMatchStats[]>;
+}
+
+export interface StandingsRepository {
+  getLigaProfesional(): Promise<LigaProfesionalStandings>;
 }
 
 export interface NewsRepository {

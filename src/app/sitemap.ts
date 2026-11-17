@@ -12,6 +12,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: SITE_URL, changeFrequency: "daily", priority: 1 },
     { url: `${SITE_URL}/novedades`, changeFrequency: "daily", priority: 0.9 },
     { url: `${SITE_URL}/calendario`, changeFrequency: "daily", priority: 0.9 },
+    { url: `${SITE_URL}/liga-profesional`, changeFrequency: "daily", priority: 0.9 },
     { url: `${SITE_URL}/temporada`, changeFrequency: "weekly", priority: 0.8 },
   ];
 

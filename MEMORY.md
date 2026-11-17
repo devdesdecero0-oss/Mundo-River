@@ -8,7 +8,8 @@ Memoria del proyecto entre sesiones. Máximo ~50 líneas: resume o elimina lo qu
 - PWA instalable con manifest, service worker propio, offline, aviso de actualización e instalación guiada en iOS.
 - Deploy en producción: https://mundo-river.vercel.app (proyecto `devdesdecero0/mundo-river`); manifest, SW y offline verificados sobre la URL pública.
 - Vercel Production tiene `BZZOIRO_TOKEN` y `DATA_MODE=live` como secretos; la producción fue redeployada y verificada con noticias RSS actuales y partidos reales.
-- Suite: 193 tests unitarios y 26 E2E en verde; lint, typecheck y build limpios.
+- Liga Profesional: `/liga-profesional` muestra tabla anual de fases regulares y grupo oficial de River desde Bzzoiro (`/leagues/85/standings/`); la tabla anual pagina todos los eventos de la liga y excluye playoffs.
+- Suite: 198 tests unitarios y 28 E2E en verde; lint, typecheck y build limpios.
 - Detalle real validado: `/partidos/bzzoiro:event:654311` (River vs Lanús, 22/11/2026) muestra previa, formaciones y calificaciones.
 
 ## Decisiones

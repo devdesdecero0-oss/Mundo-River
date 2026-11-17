@@ -1,4 +1,4 @@
-import type { NewsRepository } from "./contracts";
+import type { NewsRepository, StandingsRepository } from "./contracts";
 import { readServerEnv, type ServerEnv } from "@/lib/env";
 import {
   BzzoiroMatchesRepository,
@@ -9,6 +9,7 @@ import {
   MockMatchesRepository,
   MockNewsRepository,
   MockSquadRepository,
+  MockStandingsRepository,
 } from "./mock";
 
 export type {
@@ -16,6 +17,7 @@ export type {
   DataSourceAware,
   MatchesRepository,
   NewsRepository,
+  StandingsRepository,
   SquadRepository,
 } from "./contracts";
 
@@ -23,6 +25,7 @@ interface Repositories {
   matches: BzzoiroMatchesRepository | MockMatchesRepository;
   news: NewsRepository;
   squad: BzzoiroSquadRepository | MockSquadRepository;
+  standings: StandingsRepository;
 }
 
 /**
@@ -39,6 +42,7 @@ function createRepositories(env: ServerEnv): Repositories {
       matches: new BzzoiroMatchesRepository({ token: env.bzzoiroToken }),
       news: new RssNewsRepository({ feeds: env.newsFeeds }),
       squad: new BzzoiroSquadRepository({ token: env.bzzoiroToken }),
+      standings: new BzzoiroMatchesRepository({ token: env.bzzoiroToken }),
     };
   }
 
@@ -46,6 +50,7 @@ function createRepositories(env: ServerEnv): Repositories {
     matches: new MockMatchesRepository(),
     news: new MockNewsRepository(),
     squad: new MockSquadRepository(),
+    standings: new MockStandingsRepository(),
   };
 }
 
@@ -54,3 +59,4 @@ const repositories = createRepositories(readServerEnv());
 export const matchesRepository = repositories.matches;
 export const newsRepository = repositories.news;
 export const squadRepository = repositories.squad;
+export const standingsRepository = repositories.standings;

@@ -6,6 +6,7 @@ Centro de información y Match Center para hinchas de River Plate, construido co
 
 - **Novedades** (`/novedades`): titulares reales de Google News RSS con fuente, fecha y enlace externo; búsqueda sin acentos, filtros sincronizados con la URL, paginación y notas relacionadas. No se copia el cuerpo de las notas.
 - **Calendario** (`/calendario`): partidos reales de la temporada, vista de mes y agenda, filtros por competición, mes y estado, partido en vivo destacado, estados vacíos y navegación por teclado.
+- **Liga Profesional** (`/liga-profesional`): tabla anual calculada con las fases regulares y tabla oficial del grupo de River, con puntos, posiciones, goles y forma.
 - **Match Center** (`/partidos/[id]`): 5 pestañas accesibles (Resumen, Incidencias, Estadísticas, Formaciones, Calificaciones), previa con countdown, H2H, estadísticas comparativas, MVP, notas individuales, auto-refresh cada 30 s y enlaces directos con `?tab=`. Usa estado, minuto, formaciones y calificaciones reales del proveedor.
 - **Temporada** (`/temporada`): goleador y asistente, top 5 de cada ranking con barras proporcionales, registro, efectividad, racha, últimos 5, local/visitante y panel del jugador sin abandonar la página. Se alimenta de las estadísticas reales por jugador y se recalcula al filtrar por competición.
 - **Tema claro/oscuro**: toggle accesible en el header, persistencia en cookie `mr_theme`, respeto de `prefers-color-scheme` en la primera visita sin parpadeo y sincronización entre pestañas con `BroadcastChannel`.

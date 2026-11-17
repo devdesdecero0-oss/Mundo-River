@@ -94,6 +94,58 @@ export const bzzoiroLeagueSchema = z
 
 export type BzzoiroLeague = z.infer<typeof bzzoiroLeagueSchema>;
 
+export const bzzoiroStandingRowSchema = z
+  .object({
+    position: z.number(),
+    team_id: z.number(),
+    team_name: z.string(),
+    played: z.number(),
+    won: z.number(),
+    drawn: z.number(),
+    lost: z.number(),
+    gf: z.number(),
+    ga: z.number(),
+    gd: z.number(),
+    pts: z.number(),
+    form: nullableString,
+    live: z.boolean().optional(),
+    zone: z
+      .object({
+        key: z.string(),
+        label: z.string(),
+        type: z.string(),
+      })
+      .nullable()
+      .optional(),
+  })
+  .passthrough();
+
+export const bzzoiroStandingsSchema = z
+  .object({
+    league_id: z.number(),
+    season: bzzoiroSeasonSchema,
+    grouped: z.boolean().optional(),
+    groups: z.record(z.string(), z.array(bzzoiroStandingRowSchema)),
+    zones: z
+      .record(
+        z.string(),
+        z.array(
+          z.object({
+            key: z.string(),
+            label: z.string(),
+            type: z.string(),
+            from: z.number(),
+            to: z.number(),
+          }),
+        ),
+      )
+      .optional(),
+  })
+  .passthrough();
+
+export type BzzoiroStandingRow = z.infer<typeof bzzoiroStandingRowSchema>;
+export type BzzoiroStandings = z.infer<typeof bzzoiroStandingsSchema>;
+
 export const bzzoiroIncidentSchema = z
   .object({
     type: z.string(),

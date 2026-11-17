@@ -6,6 +6,12 @@ import type {
   SquadSnapshot,
   Team,
 } from "@/domain/types";
+import {
+  buildStandings,
+  selectGroupForTeam,
+  type LigaProfesionalStandings,
+  type StandingsMatch,
+} from "@/domain/standings";
 import { sortMatches } from "@/domain/matches";
 import type {
   DataSource,
@@ -13,7 +19,7 @@ import type {
   MatchesRepository,
   SquadRepository,
 } from "./contracts";
-import { MockMatchesRepository, MockSquadRepository } from "./mock";
+import { MockMatchesRepository, MockSquadRepository, MockStandingsRepository } from "./mock";
 import { BzzoiroClient } from "@/data/providers/bzzoiro/client";
 import {
   LEAGUE_META,
@@ -28,7 +34,9 @@ import {
   mapStats,
   mapTeams,
   mapVenueName,
+  mapProviderStatus,
   providerMatchId,
+  providerTeamId,
 } from "@/data/providers/bzzoiro/mappers";
 import {
   bzzoiroEventDetailSchema,
@@ -39,10 +47,12 @@ import {
   bzzoiroPlayerStatsSchema,
   bzzoiroSquadSchema,
   bzzoiroStatsSchema,
+  bzzoiroStandingsSchema,
   bzzoiroVenueSchema,
   type BzzoiroEvent,
   type BzzoiroLeague,
 } from "@/data/providers/bzzoiro/schemas";
+import { mapStandingGroups } from "@/data/providers/bzzoiro/standings";
 
 const MATCHES_TTL = 5 * 60_000;
 const SQUAD_TTL = 6 * 60 * 60_000;
@@ -50,6 +60,8 @@ const LIVE_REVALIDATE = 20;
 const FINISHED_REVALIDATE = 60 * 60;
 const LEAGUE_REVALIDATE = 6 * 60 * 60;
 const VENUE_REVALIDATE = 24 * 60 * 60;
+const LIGA_PROFESIONAL_ID = 85;
+const EVENTS_PAGE_SIZE = 200;
 
 const LEAGUE_NAME_FALLBACK: Record<number, string> = {
   85: "Liga Profesional de Fútbol",
@@ -79,6 +91,7 @@ export class BzzoiroMatchesRepository implements MatchesRepository, DataSourceAw
   private bundlePromise: Promise<SeasonBundle> | null = null;
   private source: DataSource = "live";
   private readonly mock = new MockMatchesRepository();
+  private readonly mockStandings = new MockStandingsRepository();
 
   constructor(options: BzzoiroMatchesRepositoryOptions) {
     this.client =
@@ -250,6 +263,28 @@ export class BzzoiroMatchesRepository implements MatchesRepository, DataSourceAw
     }
   }
 
+  async getLigaProfesional(): Promise<LigaProfesionalStandings> {
+    try {
+      const providerStandings = await this.client.get(
+        `leagues/${LIGA_PROFESIONAL_ID}/standings/`,
+        bzzoiroStandingsSchema,
+        { revalidate: 300, tags: ["liga-profesional-standings"] },
+      );
+      const events = await this.fetchLeagueEvents(providerStandings.season.id);
+      const annual = buildStandings(events.map(toStandingsMatch));
+      const groups = mapStandingGroups(providerStandings.groups);
+
+      return {
+        seasonLabel: providerStandings.season.name,
+        annual,
+        riverGroup: selectGroupForTeam(groups, providerTeamId(RIVER_PROVIDER_TEAM_ID)),
+      };
+    } catch (error) {
+      console.error("[bzzoiro] No se pudo cargar la tabla de Liga Profesional.", error);
+      return this.mockStandings.getLigaProfesional();
+    }
+  }
+
   private async fetchPlayerStats(
     eventId: number,
     revalidate: number,
@@ -351,6 +386,29 @@ export class BzzoiroMatchesRepository implements MatchesRepository, DataSourceAw
     };
   }
 
+  private async fetchLeagueEvents(seasonId: number): Promise<BzzoiroEvent[]> {
+    const events: BzzoiroEvent[] = [];
+    let offset = 0;
+
+    while (true) {
+      const payload = await this.client.get(
+        `events/?league_id=${LIGA_PROFESIONAL_ID}&season_id=${seasonId}&limit=${EVENTS_PAGE_SIZE}&offset=${offset}`,
+        bzzoiroEventListSchema,
+        { revalidate: 300, tags: ["liga-profesional"] },
+      );
+      events.push(...payload.results);
+
+      if (
+        payload.results.length === 0 ||
+        payload.count === undefined ||
+        events.length >= payload.count
+      ) {
+        return events;
+      }
+      offset += payload.results.length;
+    }
+  }
+
   private competitionsFromBundle(bundle: SeasonBundle): Competition[] {
     const seen = new Set<string>();
     const competitions: Competition[] = [];
@@ -388,6 +446,20 @@ export class BzzoiroMatchesRepository implements MatchesRepository, DataSourceAw
       return undefined;
     }
   }
+}
+
+function toStandingsMatch(event: BzzoiroEvent): StandingsMatch {
+  return {
+    id: String(event.id),
+    stage: event.stage,
+    status: mapProviderStatus(event),
+    homeTeamId: providerTeamId(event.home_team_id),
+    homeTeamName: event.home_team,
+    awayTeamId: providerTeamId(event.away_team_id),
+    awayTeamName: event.away_team,
+    homeScore: event.home_score ?? undefined,
+    awayScore: event.away_score ?? undefined,
+  };
 }
 
 export interface BzzoiroSquadRepositoryOptions {

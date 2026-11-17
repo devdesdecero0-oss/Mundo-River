@@ -71,6 +71,17 @@ test.describe("Flujos críticos de Mundo River", () => {
     await expect(dialog).toBeHidden();
   });
 
+  test("Liga Profesional muestra tabla anual y grupo de River", async ({ page }) => {
+    await page.goto("/liga-profesional");
+
+    await expect(page.getByRole("heading", { name: "Liga Profesional" }).first()).toBeVisible();
+    await expect(page.getByRole("heading", { name: "Tabla anual" })).toBeVisible();
+    await expect(page.getByRole("heading", { name: /Grupo de River/ })).toBeVisible();
+    await expect(page.getByRole("table", { name: "Tabla anual" })).toBeVisible();
+    await expect(page.getByRole("table", { name: /Grupo de River/ })).toBeVisible();
+    await expect(page.getByText("River Plate").first()).toBeVisible();
+  });
+
   test("una ruta inexistente muestra el estado 404 con accesos", async ({ page }) => {
     await page.goto("/partidos/no-existe");
 
