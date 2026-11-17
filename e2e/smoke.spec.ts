@@ -31,6 +31,13 @@ test.describe("Flujos críticos de Mundo River", () => {
   test("calendario cambia a agenda y filtra por competición", async ({ page }) => {
     await page.goto("/calendario");
 
+    const monthHeading = page.locator("h2").filter({ hasText: /2026|2027/ }).first();
+    const initialMonth = await monthHeading.innerText();
+    await page.getByRole("button", { name: "Mes siguiente" }).click();
+    await expect(monthHeading).not.toHaveText(initialMonth);
+    await expect(page).toHaveURL(/mes=\d{4}-\d{2}/);
+    await expect(page.getByText("Cargando el calendario")).toBeHidden();
+
     await page.getByRole("button", { name: "Agenda", exact: true }).click();
     await expect(page).toHaveURL(/vista=agenda/);
     await expect(page.getByRole("heading", { name: "Agenda de la temporada" })).toBeVisible();

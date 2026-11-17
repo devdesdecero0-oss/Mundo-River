@@ -1,6 +1,6 @@
 "use client";
 
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { TeamBadge } from "@/components/brand/team-badge";
 import { CalendarMatchDetail } from "@/components/calendar/calendar-match-detail";
@@ -69,10 +69,9 @@ export function CalendarView({
 }) {
   const { timeZone } = useTimeZone();
   const now = useNow(30_000, nowIso);
-  const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const selectedMatchId = searchParams.get("partido");
+  const [selectedMatchId, setSelectedMatchId] = useState<string | null>(() => searchParams.get("partido"));
 
   const [view, setView] = useState<View>(() => (searchParams.get("vista") === "agenda" ? "agenda" : "mes"));
   const [competition, setCompetition] = useState<string>(() => {
@@ -100,6 +99,10 @@ export function CalendarView({
   }, [timeZone, searchParams]);
 
   useEffect(() => {
+    setSelectedMatchId(searchParams.get("partido"));
+  }, [searchParams]);
+
+  useEffect(() => {
     const params = new URLSearchParams();
     if (competition !== "all") params.set("comp", competition);
     if (status !== "all") params.set("estado", status);
@@ -110,8 +113,10 @@ export function CalendarView({
     }
     const nextUrl = params.toString() ? `${pathname}?${params.toString()}` : pathname;
     const currentUrl = searchParams.toString() ? `${pathname}?${searchParams.toString()}` : pathname;
-    if (nextUrl !== currentUrl) router.replace(nextUrl, { scroll: false });
-  }, [competition, status, view, month, currentMonth, pathname, router, searchParams, selectedMatchId, matches]);
+    if (nextUrl !== currentUrl) {
+      window.history.replaceState(window.history.state, "", nextUrl);
+    }
+  }, [competition, status, view, month, currentMonth, pathname, searchParams, selectedMatchId, matches]);
 
   const filterByStatus = (match: Match): boolean => {
     if (status === "all") return true;
@@ -166,14 +171,16 @@ export function CalendarView({
   function openMatchDetail(match: Match) {
     const params = new URLSearchParams(searchParams.toString());
     params.set("partido", match.id);
-    router.replace(`${pathname}?${params.toString()}`, { scroll: false });
+    setSelectedMatchId(match.id);
+    window.history.replaceState(window.history.state, "", `${pathname}?${params.toString()}`);
   }
 
   function closeMatchDetail() {
     const params = new URLSearchParams(searchParams.toString());
     params.delete("partido");
+    setSelectedMatchId(null);
     const query = params.toString();
-    router.replace(query ? `${pathname}?${query}` : pathname, { scroll: false });
+    window.history.replaceState(window.history.state, "", query ? `${pathname}?${query}` : pathname);
   }
 
   function resetFilters() {

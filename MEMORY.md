@@ -11,6 +11,7 @@ Memoria del proyecto entre sesiones. Máximo ~50 líneas: resume o elimina lo qu
 - Liga Profesional: `/liga-profesional` muestra tabla anual de fases regulares y grupo oficial de River desde Bzzoiro (`/leagues/85/standings/`); la tabla anual pagina todos los eventos de la liga y excluye playoffs.
 - Producción verificada: tabla anual con 30 equipos y River en 7.º con 55 puntos; grupo detectado automáticamente como `Clausura, Grupo B`.
 - Calendario: las fechas y partidos abren un panel contextual con todos los encuentros del día; la selección se refleja en `?partido=<id>`, respetando estados, sede, hora local, resultado, motivo y minuto en vivo.
+- Calendario: cambiar de mes sincroniza la URL con History API en lugar de `router.replace`, evitando navegación server-side y la recarga visual; la selección del partido usa estado local sincronizado con `?partido=`.
 - Suite: 203 tests unitarios y 32 E2E en verde; lint, typecheck y build limpios.
 - Detalle real validado: `/partidos/bzzoiro:event:654311` (River vs Lanús, 22/11/2026) muestra previa, formaciones y calificaciones.
 
@@ -50,6 +51,7 @@ Memoria del proyecto entre sesiones. Máximo ~50 líneas: resume o elimina lo qu
 - `vercel login <email>` está deprecado: el flujo actual es dispositivo (`https://vercel.com/oauth/device?user_code=...`).
 - `isFinishedMatch` también debe reconocer `providerStatus === "finished"`; Bzzoiro no siempre envía `statusOverride` ni `finishedAt`.
 - No ejecutar `pnpm build` y Playwright en paralelo: ambos usan `.next` y pueden corromper el artefacto de compilación.
+- En Next App Router, `router.replace` para filtros locales vuelve a ejecutar la página server-side; para el calendario usar History API y mantener estado local cuando `useSearchParams` no se actualiza inmediatamente.
 
 ## Próximos pasos
 - `NEWS_FEEDS` no es necesario por ahora: usa el feed Google News predeterminado; se puede sobrescribir en Vercel si se agregan fuentes.

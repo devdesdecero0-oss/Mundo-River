@@ -16,6 +16,7 @@ metodologia: TDD — test primero, implementación después
 - [x] **T605** Hacer interactivas las fechas y partidos del calendario.
 - [x] **T606** Agregar pruebas E2E.
 - [x] **T607** Ejecutar verificaciones y actualizar memoria.
+- [x] **T608** Corregir la sincronización de mes para evitar navegación server-side.
 
 ## Resultado
 
@@ -23,3 +24,4 @@ metodologia: TDD — test primero, implementación después
 - La selección se conserva en `?partido=<id>`.
 - Se muestran sede, hora, resultado, estado, motivo y minuto en vivo según corresponda.
 - Verificación: 203 tests unitarios, 32 E2E, lint, typecheck y build en verde.
+- La navegación entre meses actualiza la URL con History API sin recargar la página ni volver a pedir los datos server-side.
