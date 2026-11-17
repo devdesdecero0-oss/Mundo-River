@@ -47,6 +47,6 @@ Memoria del proyecto entre sesiones. Máximo ~50 líneas: resume o elimina lo qu
 
 ## Próximos pasos
 - Cargar `BZZOIRO_TOKEN` y `NEWS_FEEDS` en Vercel (Settings → Environment Variables) y redeployar; sin token el sitio usa mock.
-- Repo en GitHub pendiente: no hay `gh` instalado; requiere crear el repo vacío y hacer `git init` + push.
+- Repo GitHub publicado: https://github.com/devdesdecero0-oss/Mundo-River.git, rama `main`, commit inicial `1f607b4`.
 - E2E corre en modo mock vía `playwright.config.ts`; no requiere variables externas.
 - Evaluar T122 (`pnpm data:snapshot`) y T123 (aviso no bloqueante de fallback) si se priorizan.
