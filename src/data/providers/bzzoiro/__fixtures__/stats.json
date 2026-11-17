@@ -1,0 +1,174 @@
+{
+  "event_id": 223874,
+  "xg_estimated": false,
+  "stats": {
+    "home": {
+      "duels": 48,
+      "fouls": 17,
+      "passes": 514,
+      "crosses": {
+        "value": 8,
+        "total": 24,
+        "pct": 33
+      },
+      "punches": 1,
+      "tackles": 24,
+      "dribbles": {
+        "value": 3,
+        "total": 15,
+        "pct": 20
+      },
+      "offsides": 1,
+      "big_saves": 0,
+      "red_cards": 0,
+      "throw_ins": 18,
+      "clearances": 22,
+      "free_kicks": 8,
+      "goal_kicks": 4,
+      "long_balls": {
+        "value": 20,
+        "total": 49,
+        "pct": 41
+      },
+      "recoveries": 39,
+      "big_chances": 1,
+      "high_claims": 0,
+      "tackles_won": 58,
+      "total_saves": 0,
+      "total_shots": 16,
+      "aerial_duels": {
+        "value": 11,
+        "total": 19,
+        "pct": 58
+      },
+      "corner_kicks": 10,
+      "dispossessed": 5,
+      "ground_duels": {
+        "value": 35,
+        "total": 76,
+        "pct": 46
+      },
+      "hit_woodwork": 1,
+      "yellow_cards": 7,
+      "blocked_shots": 2,
+      "interceptions": 7,
+      "total_tackles": 24,
+      "average_rating": 6.96,
+      "expected_goals": 1.19,
+      "accurate_passes": 440,
+      "ball_possession": 71,
+      "goals_prevented": 0,
+      "shots_on_target": 6,
+      "goalkeeper_saves": 0,
+      "shots_inside_box": 10,
+      "shots_off_target": 8,
+      "final_third_phase": {
+        "value": 84,
+        "total": 119,
+        "pct": 71
+      },
+      "shots_outside_box": 6,
+      "big_chances_scored": 1,
+      "final_third_entries": 53,
+      "errors_lead_to_a_shot": 0,
+      "fouled_in_final_third": 5,
+      "touches_in_penalty_area": 16,
+      "expected_goals_on_target": 1.82,
+      "attack": 102,
+      "ball_safe": 72,
+      "dangerous_attack": 54,
+      "attack_pct": 41,
+      "ball_safe_pct": 21,
+      "dangerous_attack_pct": 38,
+      "pass_accuracy_pct": 85.6,
+      "xg": {
+        "actual": 1.19,
+        "estimated": false
+      }
+    },
+    "away": {
+      "duels": 52,
+      "fouls": 8,
+      "passes": 216,
+      "crosses": {
+        "value": 1,
+        "total": 5,
+        "pct": 20
+      },
+      "punches": 0,
+      "tackles": 17,
+      "dribbles": {
+        "value": 7,
+        "total": 21,
+        "pct": 33
+      },
+      "offsides": 2,
+      "big_saves": 2,
+      "red_cards": 2,
+      "throw_ins": 15,
+      "clearances": 28,
+      "free_kicks": 17,
+      "goal_kicks": 12,
+      "long_balls": {
+        "value": 11,
+        "total": 53,
+        "pct": 21
+      },
+      "recoveries": 27,
+      "big_chances": 0,
+      "high_claims": 1,
+      "tackles_won": 88,
+      "total_saves": 5,
+      "total_shots": 3,
+      "aerial_duels": {
+        "value": 8,
+        "total": 19,
+        "pct": 42
+      },
+      "corner_kicks": 2,
+      "dispossessed": 10,
+      "ground_duels": {
+        "value": 41,
+        "total": 76,
+        "pct": 54
+      },
+      "hit_woodwork": 0,
+      "yellow_cards": 2,
+      "blocked_shots": 0,
+      "interceptions": 4,
+      "total_tackles": 17,
+      "average_rating": 6.44,
+      "expected_goals": 0.11,
+      "accurate_passes": 144,
+      "ball_possession": 29,
+      "goals_prevented": 0.82,
+      "shots_on_target": 0,
+      "goalkeeper_saves": 5,
+      "shots_inside_box": 1,
+      "shots_off_target": 3,
+      "final_third_phase": {
+        "value": 32,
+        "total": 68,
+        "pct": 47
+      },
+      "shots_outside_box": 2,
+      "big_chances_scored": 0,
+      "final_third_entries": 46,
+      "errors_lead_to_a_shot": 1,
+      "fouled_in_final_third": 1,
+      "touches_in_penalty_area": 5,
+      "expected_goals_on_target": 0,
+      "attack": 66,
+      "ball_safe": 67,
+      "dangerous_attack": 22,
+      "attack_pct": 28,
+      "ball_safe_pct": 60,
+      "dangerous_attack_pct": 12,
+      "pass_accuracy_pct": 66.7,
+      "xg": {
+        "actual": 0.11,
+        "estimated": false
+      }
+    }
+  }
+}

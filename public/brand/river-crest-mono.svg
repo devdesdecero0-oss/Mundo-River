@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 300" role="img" aria-labelledby="crestTitle">
+  <title id="crestTitle">Escudo de River Plate (respaldo monocromático)</title>
+  <path d="M120 6 L230 40 L218 190 C212 240 170 274 120 294 C70 274 28 240 22 190 L10 40 Z" fill="#ffffff" stroke="#0a0a0c" stroke-width="9" stroke-linejoin="round" />
+  <path d="M18 100 L222 42 L222 108 L18 166 Z" fill="#0a0a0c" opacity="0.14" />
+  <text x="120" y="76" text-anchor="middle" font-family="Arial Black, Arial, sans-serif" font-size="30" font-weight="900" letter-spacing="2" fill="#0a0a0c">CARP</text>
+  <path d="M120 236 l4.2 8.6 9.5 1.4-6.9 6.7 1.6 9.4-8.4-4.4-8.4 4.4 1.6-9.4-6.9-6.7 9.5-1.4z" fill="#0a0a0c" />
+</svg>

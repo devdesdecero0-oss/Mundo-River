@@ -1,0 +1,297 @@
+{
+  "event_id": 223874,
+  "incidents": [
+    {
+      "text": "FT",
+      "type": "period",
+      "minute": 90,
+      "is_live": false,
+      "away_score": 0,
+      "home_score": 1
+    },
+    {
+      "type": "card",
+      "minute": 90,
+      "player": "A. Costa",
+      "reason": "Foul",
+      "is_home": true,
+      "card_type": "yellow",
+      "player_id": 22026,
+      "added_time": 7
+    },
+    {
+      "type": "injuryTime",
+      "length": 8,
+      "minute": 90
+    },
+    {
+      "type": "substitution",
+      "minute": 88,
+      "is_home": true,
+      "player_in": "T. Belmonte",
+      "added_time": null,
+      "player_out": "L. Paredes",
+      "player_in_id": 22018,
+      "player_out_id": 16872
+    },
+    {
+      "type": "substitution",
+      "minute": 88,
+      "is_home": true,
+      "player_in": "C. Palacios",
+      "added_time": null,
+      "player_out": "S. Villa",
+      "player_in_id": 22008,
+      "player_out_id": 22761
+    },
+    {
+      "type": "substitution",
+      "minute": 85,
+      "is_home": false,
+      "player_in": "G. González",
+      "added_time": null,
+      "player_out": "T. Galván",
+      "player_in_id": 90639,
+      "player_out_id": 23009
+    },
+    {
+      "type": "card",
+      "minute": 79,
+      "player": "G. Montiel",
+      "reason": "Foul",
+      "is_home": false,
+      "card_type": "red",
+      "player_id": 23014,
+      "added_time": null
+    },
+    {
+      "type": "card",
+      "minute": 77,
+      "player": "E. Valencia",
+      "reason": "Foul",
+      "is_home": true,
+      "card_type": "yellow",
+      "player_id": 4754,
+      "added_time": null
+    },
+    {
+      "type": "substitution",
+      "minute": 76,
+      "is_home": true,
+      "player_in": "E. Valencia",
+      "added_time": null,
+      "player_out": "M. Merentiel",
+      "player_in_id": 4754,
+      "player_out_id": 21998
+    },
+    {
+      "type": "substitution",
+      "minute": 71,
+      "is_home": false,
+      "player_in": "J. C. Meza",
+      "added_time": null,
+      "player_out": "T. Andrada",
+      "player_in_id": 23015,
+      "player_out_id": 91232
+    },
+    {
+      "type": "substitution",
+      "minute": 71,
+      "is_home": false,
+      "player_in": "S. Driussi",
+      "added_time": null,
+      "player_out": "T. Almada",
+      "player_in_id": 23011,
+      "player_out_id": 773
+    },
+    {
+      "type": "card",
+      "minute": 68,
+      "player": "A. Velasco",
+      "reason": "Argument",
+      "is_home": true,
+      "card_type": "yellow",
+      "player_id": 22012,
+      "added_time": null
+    },
+    {
+      "type": "substitution",
+      "minute": 62,
+      "is_home": true,
+      "player_in": "A. Velasco",
+      "added_time": null,
+      "player_out": "L. Flores",
+      "player_in_id": 22012,
+      "player_out_id": 22004
+    },
+    {
+      "type": "card",
+      "minute": 57,
+      "player": "L. Blanco",
+      "reason": "Foul",
+      "is_home": true,
+      "card_type": "yellow",
+      "player_id": 22025,
+      "added_time": null
+    },
+    {
+      "type": "substitution",
+      "minute": 46,
+      "is_home": false,
+      "player_in": "L. Pereyra",
+      "added_time": null,
+      "player_out": "L. Silva",
+      "player_in_id": 23018,
+      "player_out_id": 47968
+    },
+    {
+      "type": "substitution",
+      "minute": 46,
+      "is_home": true,
+      "player_in": "A. Costa",
+      "added_time": null,
+      "player_out": "F. Herrera",
+      "player_in_id": 22026,
+      "player_out_id": 90387
+    },
+    {
+      "text": "HT",
+      "type": "period",
+      "minute": 45,
+      "is_live": false,
+      "away_score": 0,
+      "home_score": 1
+    },
+    {
+      "type": "card",
+      "minute": 45,
+      "player": "L. Paredes",
+      "reason": "Time wasting",
+      "is_home": true,
+      "card_type": "yellow",
+      "player_id": 16872,
+      "added_time": 5
+    },
+    {
+      "type": "card",
+      "minute": 45,
+      "player": "M. Acuña",
+      "reason": "Argument",
+      "is_home": false,
+      "card_type": "yellow",
+      "player_id": 16869,
+      "added_time": 4
+    },
+    {
+      "type": "injuryTime",
+      "length": 4,
+      "minute": 45
+    },
+    {
+      "type": "card",
+      "minute": 43,
+      "player": "F. Herrera",
+      "reason": "Foul",
+      "is_home": true,
+      "card_type": "yellow",
+      "player_id": 90387,
+      "added_time": null
+    },
+    {
+      "type": "goal",
+      "assist": "S. Villa",
+      "minute": 27,
+      "player": "L. D. Lollo",
+      "is_home": true,
+      "sequence": [
+        {
+          "end": {
+            "x": 92.8,
+            "y": 53.7
+          },
+          "pid": 22761,
+          "pos": {
+            "x": 99.5,
+            "y": 0.5
+          },
+          "event": "cross",
+          "assist": true,
+          "player": "S. Villa"
+        },
+        {
+          "gk": {
+            "x": 98.6,
+            "y": 52
+          },
+          "gm": {
+            "x": 65.59,
+            "y": 70.5
+          },
+          "pid": 22023,
+          "pos": {
+            "x": 92.8,
+            "y": 53.7
+          },
+          "body": "head",
+          "event": "goal",
+          "player": "L. D. Lollo"
+        }
+      ],
+      "goal_type": "regular",
+      "player_id": 22023,
+      "added_time": null,
+      "away_score": 0,
+      "home_score": 1
+    },
+    {
+      "type": "card",
+      "minute": 20,
+      "player": "L. D. Lollo",
+      "reason": "Foul",
+      "is_home": true,
+      "card_type": "yellow",
+      "player_id": 22023,
+      "added_time": null
+    },
+    {
+      "type": "substitution",
+      "minute": 13,
+      "is_home": false,
+      "player_in": "L. Rivero",
+      "added_time": null,
+      "player_out": "L. Beltrán",
+      "player_in_id": 23007,
+      "player_out_id": 936
+    },
+    {
+      "type": "card",
+      "minute": 10,
+      "player": "L. Martinez Quarta",
+      "reason": "Professional foul last man",
+      "is_home": false,
+      "card_type": "red",
+      "player_id": 16871,
+      "added_time": null
+    },
+    {
+      "type": "varDecision",
+      "minute": 8,
+      "player": "L. Martinez Quarta",
+      "is_home": false,
+      "decision": "cardUpgrade",
+      "confirmed": false,
+      "player_id": 16871,
+      "added_time": null
+    },
+    {
+      "type": "card",
+      "minute": 82,
+      "player": "R. Borré",
+      "reason": "Argument",
+      "is_home": false,
+      "card_type": "yellow",
+      "player_id": 172,
+      "added_time": null
+    }
+  ]
+}

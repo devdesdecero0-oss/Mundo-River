@@ -1,0 +1,17 @@
+# Nunca subir secretos ni artefactos locales a Vercel
+.env
+.env.local
+.env.*.local
+!.env.example
+
+.next/
+out/
+coverage/
+test-results/
+playwright-report/
+blob-report/
+node_modules/
+.pnpm-store/
+*.tsbuildinfo
+*.log
+.opencode/

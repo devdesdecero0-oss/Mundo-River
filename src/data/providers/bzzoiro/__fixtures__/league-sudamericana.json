@@ -1,0 +1,73 @@
+{
+  "id": 33,
+  "name": "Copa Sudamericana",
+  "country": "South America",
+  "is_women": false,
+  "is_active": true,
+  "current_season": {
+    "id": 114,
+    "name": "CONMEBOL Sudamericana 2026",
+    "year": 2026,
+    "start_date": "2026-01-01",
+    "end_date": "2026-12-31",
+    "is_current": true,
+    "stages": [
+      {
+        "stage": "qualification-round-1",
+        "stage_name": "Qualification Round 1",
+        "matches": 16,
+        "rounds": 1,
+        "start_date": "2026-03-03",
+        "end_date": "2026-03-06"
+      },
+      {
+        "stage": "group-stage",
+        "stage_name": "Group stage",
+        "matches": 96,
+        "rounds": 6,
+        "start_date": "2026-04-07",
+        "end_date": "2026-05-29"
+      },
+      {
+        "stage": "playoff-round",
+        "stage_name": "Playoff round",
+        "matches": 16,
+        "rounds": 1,
+        "start_date": "2026-07-21",
+        "end_date": "2026-07-31"
+      },
+      {
+        "stage": "round-of-16",
+        "stage_name": "Round of 16",
+        "matches": 17,
+        "rounds": 1,
+        "start_date": "2026-08-11",
+        "end_date": "2026-08-27"
+      },
+      {
+        "stage": "quarterfinals",
+        "stage_name": "Quarterfinals",
+        "matches": 8,
+        "rounds": 1,
+        "start_date": "2026-09-08",
+        "end_date": "2026-09-18"
+      },
+      {
+        "stage": "semifinals",
+        "stage_name": "Semifinals",
+        "matches": 4,
+        "rounds": 1,
+        "start_date": "2026-10-14",
+        "end_date": "2026-10-21"
+      },
+      {
+        "stage": "final",
+        "stage_name": "Final",
+        "matches": 1,
+        "rounds": 1,
+        "start_date": "2026-11-21",
+        "end_date": "2026-11-21"
+      }
+    ]
+  }
+}
