@@ -1,4 +1,4 @@
-import type { Match, Player, PlayerMatchStats, Team } from "@/domain/types";
+import type { Competition, Match, Player, PlayerMatchStats, Team } from "@/domain/types";
 import { isFinishedMatch } from "./record";
 import { normalizeRating } from "./ratings";
 
@@ -36,10 +36,13 @@ export function buildSquadPerformance(
   matches: readonly Match[],
   playerStats: readonly PlayerMatchStats[],
   teamId = "river",
+  competitions: readonly Competition[] = [],
 ): SquadPerformance[] {
+  const competitionById = new Map(competitions.map((competition) => [competition.id, competition]));
   const finishedMatches = matches.filter(
     (match) =>
       isFinishedMatch(match) &&
+      competitionById.get(match.competitionId)?.type !== "friendly" &&
       (match.homeTeamId === teamId || match.awayTeamId === teamId),
   );
   const finishedIds = new Set(finishedMatches.map((match) => match.id));

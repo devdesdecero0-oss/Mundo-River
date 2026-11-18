@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { buildSquadPerformance, formatPlayerMatchLabel } from "@/domain/stats/squad-performance";
-import type { Match, Player, PlayerMatchStats, Team } from "@/domain/types";
+import type { Competition, Match, Player, PlayerMatchStats, Team } from "@/domain/types";
 
 const players: Player[] = [
   {
@@ -24,6 +24,25 @@ const players: Player[] = [
 const teams: Team[] = [
   { id: "river", name: "River Plate", shortName: "River", crest: "", primaryColor: "", secondaryColor: "" },
   { id: "rival", name: "Boca Juniors", shortName: "Boca", crest: "", primaryColor: "", secondaryColor: "" },
+];
+
+const competitions: Competition[] = [
+  {
+    id: "liga-2026",
+    slug: "liga-profesional",
+    name: "Liga Profesional",
+    shortName: "Liga",
+    type: "league",
+    seasonLabel: "2026",
+  },
+  {
+    id: "amistosos-2026",
+    slug: "amistosos",
+    name: "Amistosos",
+    shortName: "Amistosos",
+    type: "friendly",
+    seasonLabel: "2026",
+  },
 ];
 
 function match(id: string, finishedAt?: string): Match {
@@ -139,5 +158,27 @@ describe("R-SQUAD-PERFORMANCE — puntaje del plantel", () => {
 
     expect(local).toMatchObject({ round: "Fecha 14", fixture: "River Plate vs Boca Juniors" });
     expect(visitante).toMatchObject({ round: "Fecha 15", fixture: "Boca Juniors vs River Plate" });
+  });
+
+  it("registra el amistoso pero no lo incluye en ningún número del plantel", () => {
+    const friendly = {
+      ...match("amistoso", "2026-01-04T22:00:00Z"),
+      competitionId: "amistosos-2026",
+    };
+    const result = buildSquadPerformance(
+      players,
+      [match("m1", "2026-01-01T22:00:00Z"), friendly],
+      [stats("m1", "p1", 6), stats("amistoso", "p1", 10)],
+      "river",
+      competitions,
+    );
+
+    const player = result.find((row) => row.playerId === "p1");
+    expect(player).toMatchObject({
+      score: 6,
+      ratedMatches: 1,
+      finishedMatches: 1,
+      evaluatedMatchIds: ["m1"],
+    });
   });
 });

@@ -6,7 +6,7 @@ import { matchesRepository } from "@/data/repositories";
 export const metadata: Metadata = {
   title: "Calendario y Match Center",
   description:
-    "Todos los partidos de River Plate en la temporada: Liga Profesional, Copa Libertadores, Copa Argentina y Trofeo de Campeones. Filtros por competición, mes y estado.",
+    "Todos los partidos de River Plate en la temporada, incluidos los amistosos. Filtros por competición, mes y estado.",
   alternates: { canonical: "/calendario" },
 };
 
@@ -42,7 +42,13 @@ export default async function CalendarioPage() {
               {competitions.map((competition) => (
                 <div key={competition.id} className="rounded-xl border border-white/10 bg-white/5 px-3 py-2">
                   <dt className="text-[0.58rem] font-bold uppercase tracking-[0.15em] text-white/60">
-                    {competition.type === "league" ? "Liga" : competition.type === "international" ? "Internacional" : "Copa"}
+                    {competition.type === "league"
+                      ? "Liga"
+                      : competition.type === "international"
+                        ? "Internacional"
+                        : competition.type === "friendly"
+                          ? "Amistoso"
+                          : "Copa"}
                   </dt>
                   <dd className="mt-0.5 font-display text-sm uppercase leading-tight">{competition.shortName}</dd>
                 </div>
