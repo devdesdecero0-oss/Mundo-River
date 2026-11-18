@@ -24,6 +24,7 @@ export function buildSquadPerformance(
       (match.homeTeamId === teamId || match.awayTeamId === teamId),
   );
   const finishedIds = new Set(finishedMatches.map((match) => match.id));
+  const matchById = new Map(finishedMatches.map((match) => [match.id, match]));
   const statsByPlayer = new Map<string, Map<string, PlayerMatchStats>>();
 
   for (const row of playerStats) {
@@ -39,6 +40,11 @@ export function buildSquadPerformance(
       const ratedRows = rows
         .map((row) => ({ row, rating: normalizeRating(row.rating) }))
         .filter((item): item is { row: PlayerMatchStats; rating: number } => item.rating !== null);
+      ratedRows.sort(
+        (a, b) =>
+          new Date(matchById.get(b.row.matchId)?.kickoffAt ?? 0).getTime() -
+          new Date(matchById.get(a.row.matchId)?.kickoffAt ?? 0).getTime(),
+      );
       const score =
         ratedRows.length === 0
           ? null

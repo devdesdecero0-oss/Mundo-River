@@ -10,21 +10,21 @@
   --color-river-dark: #b00222;
   --color-river-soft: #ffe7eb;
   --color-river-ink: #e4032e;
-  --color-ink: #0a0a0c;
-  --color-ink-soft: #17171d;
-  --color-ink-muted: #4c4c55;
-  --color-paper: #f6f4ef;
-  --color-paper-deep: #ece8df;
+  --color-ink: #5a0b17;
+  --color-ink-soft: #3f0710;
+  --color-ink-muted: #704c55;
+  --color-paper: #fffafa;
+  --color-paper-deep: #f6e5e8;
   --color-surface: #ffffff;
-  --color-line: #d9d4c9;
+  --color-line: #e4cbd0;
   --color-gold: #d8b25a;
   --color-grass: #0e7a3c;
   --color-grass-ink: #0e7a3c;
   --color-inverse: #0a0a0c;
   --color-inverse-muted: #4c4c55;
-  --color-strong: #0a0a0c;
+  --color-strong: #e4032e;
   --color-on-strong: #ffffff;
-  --color-on-light: #0a0a0c;
+  --color-on-light: #5a0b17;
   --color-warning-soft: #fbf4e2;
   --color-warning-line: #d8b25a;
   --color-warning-ink: #6b5315;
@@ -53,6 +53,7 @@
   /* Los controles activos se invierten: pill clara sobre fondo oscuro. */
   --color-strong: #f4f2ec;
   --color-on-strong: #0b0b0e;
+  --color-on-light: #0a0a0c;
   --color-warning-soft: #33280f;
   --color-warning-line: #7a6428;
   --color-warning-ink: #f3d48a;

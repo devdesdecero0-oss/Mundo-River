@@ -17,6 +17,7 @@ metodologia: TDD — test primero, implementación después
 - [x] **T706** Ajustar revalidación de estadísticas finalizadas.
 - [x] **T707** Agregar navegación, E2E y metadata.
 - [x] **T708** Ejecutar verificaciones y actualizar memoria.
+- [x] **T709** Ordenar los partidos evaluados del más reciente al más antiguo.
 
 ## Resultado
 

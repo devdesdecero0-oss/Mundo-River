@@ -42,7 +42,7 @@ function accent(status: MatchStatus): string {
     case "halftime":
       return "border-l-river bg-river-soft/80 hover:bg-river-soft";
     case "finished":
-      return "border-l-ink/40 bg-ink/[0.04] hover:bg-ink/[0.08]";
+      return "border-l-ink-muted/60 bg-ink-muted/[0.08] hover:bg-ink-muted/[0.14]";
     case "postponed":
       return "border-l-warning-line bg-warning-soft hover:bg-warning-soft/80";
     case "suspended":
@@ -302,7 +302,7 @@ export function CalendarView({
         <div className="flex flex-wrap items-center gap-3 text-[0.65rem] font-bold uppercase tracking-wide text-ink-muted">
           <span className="inline-flex items-center gap-1.5"><span className="h-2.5 w-2.5 rounded-sm border-l-2 border-l-river bg-river-soft" aria-hidden="true" />En vivo</span>
           <span className="inline-flex items-center gap-1.5"><span className="h-2.5 w-2.5 rounded-sm border-l-2 border-l-river/30 bg-surface" aria-hidden="true" />Próximo</span>
-          <span className="inline-flex items-center gap-1.5"><span className="h-2.5 w-2.5 rounded-sm border-l-2 border-l-ink/40 bg-ink/5" aria-hidden="true" />Finalizado</span>
+           <span className="inline-flex items-center gap-1.5"><span className="h-2.5 w-2.5 rounded-sm border-l-2 border-l-ink-muted/60 bg-ink-muted/10" aria-hidden="true" />Finalizado</span>
           <span className="inline-flex items-center gap-1.5"><span className="h-2.5 w-2.5 rounded-sm border-l-2 border-l-warning-line bg-warning-soft" aria-hidden="true" />Aplazado</span>
         </div>
       </div>
@@ -402,7 +402,7 @@ export function CalendarView({
                   <div className="mt-1 flex flex-wrap gap-0.5 md:hidden">
                     {dayMatches.slice(0, 4).map((match) => {
                       const matchStatus = deriveMatchStatus(match, now);
-                      const dot = isLiveStatus(matchStatus) ? "bg-river" : matchStatus === "finished" ? "bg-ink/45" : matchStatus === "postponed" ? "bg-gold" : "bg-river/30";
+                       const dot = isLiveStatus(matchStatus) ? "bg-river" : matchStatus === "finished" ? "bg-ink-muted/70" : matchStatus === "postponed" ? "bg-gold" : "bg-river/30";
                       return (
                         <span key={match.id} className={`h-1.5 w-1.5 rounded-full ${dot}`} aria-hidden="true" />
                       );

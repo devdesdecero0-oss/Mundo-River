@@ -161,6 +161,18 @@ test.describe("Flujos críticos de Mundo River", () => {
     await expect(html).not.toHaveClass(/dark/);
   });
 
+  test("el modo claro usa acentos rojos y superficies blancas", async ({ page }) => {
+    await page.goto("/calendario");
+
+    const html = page.locator("html");
+    await expect(html).not.toHaveClass(/dark/);
+    await expect(page.locator("body")).toHaveCSS("color", "rgb(90, 11, 23)");
+    await expect(page.getByRole("button", { name: "Mes siguiente" })).toHaveCSS(
+      "background-color",
+      "rgb(255, 255, 255)",
+    );
+  });
+
   test("la ficha de novedades usa superficies y texto del tema oscuro", async ({ page }) => {
     await page.goto("/novedades/river-practica-ezeiza-previa-estudiantes");
 

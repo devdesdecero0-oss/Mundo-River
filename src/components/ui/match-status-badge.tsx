@@ -24,8 +24,8 @@ const STATUS_META: Record<
   },
   finished: {
     label: "Finalizado",
-    className: "border-ink/15 bg-strong text-on-strong",
-    dot: "bg-on-strong/60",
+    className: "border-ink-muted/30 bg-paper-deep text-ink-muted",
+    dot: "bg-ink-muted/70",
     icon: "■",
   },
   postponed: {

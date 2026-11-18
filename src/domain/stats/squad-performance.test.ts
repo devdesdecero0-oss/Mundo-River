@@ -103,4 +103,17 @@ describe("R-SQUAD-PERFORMANCE — puntaje del plantel", () => {
     expect(result.find((row) => row.playerId === "p1")?.score).toBe(9);
     expect(result.find((row) => row.playerId === "p1")?.ratedMatches).toBe(1);
   });
+
+  it("ordena los partidos evaluados del más reciente al más antiguo", () => {
+    const result = buildSquadPerformance(
+      players,
+      [
+        { ...match("m1", "2026-01-01T22:00:00Z"), kickoffAt: "2026-01-01T20:00:00Z" },
+        { ...match("m2", "2026-01-03T22:00:00Z"), kickoffAt: "2026-01-03T20:00:00Z" },
+      ],
+      [stats("m1", "p1", 6), stats("m2", "p1", 8)],
+    );
+
+    expect(result.find((row) => row.playerId === "p1")?.evaluatedMatchIds).toEqual(["m2", "m1"]);
+  });
 });
