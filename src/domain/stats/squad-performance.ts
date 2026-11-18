@@ -26,7 +26,7 @@ export function formatPlayerMatchLabel(
   const away = teamById.get(match.awayTeamId)?.name ?? "Equipo visitante";
 
   return {
-    round: match.round.replace(/^Matchday\s+/i, "Fecha "),
+    round: match.round.replace(/Matchday\s+/gi, "Fecha "),
     fixture: `${home} vs ${away}`,
   };
 }
