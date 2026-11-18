@@ -1,4 +1,4 @@
-import type { Match, Player, PlayerMatchStats } from "@/domain/types";
+import type { Match, Player, PlayerMatchStats, Team } from "@/domain/types";
 import { isFinishedMatch } from "./record";
 import { normalizeRating } from "./ratings";
 
@@ -10,6 +10,25 @@ export interface SquadPerformance {
   ratedMatches: number;
   finishedMatches: number;
   evaluatedMatchIds: string[];
+}
+
+export interface PlayerMatchLabel {
+  round: string;
+  fixture: string;
+}
+
+export function formatPlayerMatchLabel(
+  match: Match,
+  teams: readonly Team[],
+): PlayerMatchLabel {
+  const teamById = new Map(teams.map((team) => [team.id, team]));
+  const home = teamById.get(match.homeTeamId)?.name ?? "Equipo local";
+  const away = teamById.get(match.awayTeamId)?.name ?? "Equipo visitante";
+
+  return {
+    round: match.round.replace(/^Matchday\s+/i, "Fecha "),
+    fixture: `${home} vs ${away}`,
+  };
 }
 
 export function buildSquadPerformance(

@@ -14,8 +14,9 @@ Memoria del proyecto entre sesiones. Máximo ~50 líneas: resume o elimina lo qu
 - Calendario: cambiar de mes sincroniza la URL con History API en lugar de `router.replace`, evitando navegación server-side y la recarga visual; la selección del partido usa estado local sincronizado con `?partido=`.
 - Plantel: `/plantel` muestra el plantel vigente completo con puntaje sobre 10; suma notas válidas y divide por todos los partidos finalizados de River, con `SC` al final y enlaces a sus Match Center evaluados.
 - Plantel: los partidos evaluados de cada jugador se muestran del más reciente al más antiguo según `kickoffAt`.
+- Plantel: cada actuación muestra la ronda como `Fecha N` y el cruce completo (`River Plate vs rival` o `rival vs River Plate`) con su resultado.
 - Tema claro: superficies blancas, texto primario rojo oscuro legible, controles activos rojos y estados finalizados grises; el modo oscuro conserva sus tokens actuales.
-- Suite: 208 tests unitarios y 36 E2E en verde; lint, typecheck y build limpios.
+- Suite: 209 tests unitarios y 36 E2E en verde; lint, typecheck y build limpios.
 - Detalle real validado: `/partidos/bzzoiro:event:654311` (River vs Lanús, 22/11/2026) muestra previa, formaciones y calificaciones.
 
 ## Decisiones

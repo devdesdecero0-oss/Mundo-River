@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
-import { buildSquadPerformance } from "@/domain/stats/squad-performance";
-import type { Match, Player, PlayerMatchStats } from "@/domain/types";
+import { buildSquadPerformance, formatPlayerMatchLabel } from "@/domain/stats/squad-performance";
+import type { Match, Player, PlayerMatchStats, Team } from "@/domain/types";
 
 const players: Player[] = [
   {
@@ -19,6 +19,11 @@ const players: Player[] = [
     position: "DF",
     nationality: "Argentina",
   },
+];
+
+const teams: Team[] = [
+  { id: "river", name: "River Plate", shortName: "River", crest: "", primaryColor: "", secondaryColor: "" },
+  { id: "rival", name: "Boca Juniors", shortName: "Boca", crest: "", primaryColor: "", secondaryColor: "" },
 ];
 
 function match(id: string, finishedAt?: string): Match {
@@ -115,5 +120,24 @@ describe("R-SQUAD-PERFORMANCE — puntaje del plantel", () => {
     );
 
     expect(result.find((row) => row.playerId === "p1")?.evaluatedMatchIds).toEqual(["m2", "m1"]);
+  });
+
+  it("forma el partido con fecha y localía de River", () => {
+    const local = formatPlayerMatchLabel(
+      { ...match("m1", "2026-01-01T22:00:00Z"), round: "Matchday 14" },
+      teams,
+    );
+    const visitante = formatPlayerMatchLabel(
+      {
+        ...match("m2", "2026-01-03T22:00:00Z"),
+        round: "Fecha 15",
+        homeTeamId: "rival",
+        awayTeamId: "river",
+      },
+      teams,
+    );
+
+    expect(local).toMatchObject({ round: "Fecha 14", fixture: "River Plate vs Boca Juniors" });
+    expect(visitante).toMatchObject({ round: "Fecha 15", fixture: "Boca Juniors vs River Plate" });
   });
 });

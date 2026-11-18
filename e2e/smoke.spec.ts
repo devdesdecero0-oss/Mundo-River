@@ -127,6 +127,8 @@ test.describe("Flujos críticos de Mundo River", () => {
 
     const firstRatedPlayer = page.locator("article").filter({ hasText: "Ver partidos" }).first();
     await firstRatedPlayer.getByText("Ver partidos").click();
+    await expect(firstRatedPlayer.getByText(/Fecha \d+/).first()).toBeVisible();
+    await expect(firstRatedPlayer.getByText(/ vs /).first()).toBeVisible();
     await expect(firstRatedPlayer.getByRole("link").first()).toBeVisible();
   });
 

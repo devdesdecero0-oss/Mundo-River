@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { PlayerAvatar } from "@/components/ui/player-avatar";
-import { formatRating } from "@/domain/stats";
-import type { Match, Player } from "@/domain/types";
+import { formatPlayerMatchLabel, formatRating } from "@/domain/stats";
+import type { Match, Player, Team } from "@/domain/types";
 import type { SquadPerformance } from "@/domain/stats";
 
 const POSITION_LABEL: Record<Player["position"], string> = {
@@ -14,10 +14,12 @@ const POSITION_LABEL: Record<Player["position"], string> = {
 export function RosterPage({
   performance,
   matches,
+  teams,
   seasonLabel,
 }: {
   performance: readonly SquadPerformance[];
   matches: readonly Match[];
+  teams: readonly Team[];
   seasonLabel: string;
 }) {
   const matchById = new Map(matches.map((match) => [match.id, match]));
@@ -108,7 +110,12 @@ export function RosterPage({
                                 href={`/partidos/${match.id}`}
                                 className="block rounded-lg border border-ink/10 bg-paper p-3 text-sm transition-colors hover:border-river"
                               >
-                                <span className="block font-semibold">{match.round}</span>
+                                <span className="block font-semibold">
+                                  {formatPlayerMatchLabel(match, teams).round}
+                                </span>
+                                <span className="mt-1 block text-xs font-semibold text-ink">
+                                  {formatPlayerMatchLabel(match, teams).fixture}
+                                </span>
                                 <span className="mt-1 block text-xs text-ink-muted">
                                   {match.score ? `${match.score.home} - ${match.score.away}` : "Ver Match Center"}
                                 </span>

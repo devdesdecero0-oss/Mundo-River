@@ -17,13 +17,14 @@ export const metadata: Metadata = {
 };
 
 export default async function PlantelPage() {
-  const [matches, squad, season, playerStats] = await Promise.all([
+  const [matches, teams, squad, season, playerStats] = await Promise.all([
     matchesRepository.listMatches(),
+    matchesRepository.getTeams(),
     squadRepository.getSquad(),
     matchesRepository.getSeason(),
     matchesRepository.listPlayerStats(),
   ]);
   const performance = buildSquadPerformance(squad.players, matches, playerStats);
 
-  return <RosterPage performance={performance} matches={matches} seasonLabel={season.label} />;
+  return <RosterPage performance={performance} matches={matches} teams={teams} seasonLabel={season.label} />;
 }

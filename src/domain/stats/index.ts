@@ -22,5 +22,6 @@ export {
 } from "./ratings";
 export {
   buildSquadPerformance,
+  formatPlayerMatchLabel,
   type SquadPerformance,
 } from "./squad-performance";
