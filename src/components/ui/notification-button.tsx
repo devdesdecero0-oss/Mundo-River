@@ -17,7 +17,7 @@ export function NotificationButton({ variant = "header" }: { variant?: "header" 
             : "hidden text-[0.65rem] font-bold uppercase tracking-wide text-ink-muted md:inline"
         }
       >
-        Instalá la app para activar avisos
+        En iPhone/iPad: compartí la página y elegí “Agregar a pantalla de inicio”
       </span>
     );
   }
@@ -42,7 +42,15 @@ export function NotificationButton({ variant = "header" }: { variant?: "header" 
   return (
     <button type="button" className={className} onClick={() => void toggle()} disabled={busy} aria-label={label}>
       <span aria-hidden="true">♧</span>
-      <span>{busy ? "Procesando…" : status === "subscribed" ? "Notificaciones activas" : "Activar avisos"}</span>
+      <span>
+        {busy
+          ? "Procesando…"
+          : status === "subscribed"
+            ? "Notificaciones activas"
+            : status === "error"
+              ? "Reintentar avisos"
+              : "Activar avisos"}
+      </span>
       {variant === "menu" ? <span aria-hidden="true">→</span> : null}
     </button>
   );

@@ -5,6 +5,7 @@ import type { PushSubscriptionPayload } from "@/domain/notifications";
 export const PUSH_SUBSCRIPTIONS_SET = "mr:push:subscriptions";
 export const NOTIFIED_NEWS_SET = "mr:notifications:news";
 export const NOTIFICATIONS_INITIALIZED_KEY = "mr:notifications:initialized";
+export const NOTIFICATIONS_PROCESS_LOCK = "mr:notifications:process-lock";
 
 export function subscriptionKey(endpoint: string): string {
   return `mr:push:subscription:${createHash("sha256").update(endpoint).digest("hex")}`;

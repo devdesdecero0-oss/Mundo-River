@@ -8,6 +8,7 @@ import {
   deletePushSubscription,
   NOTIFIED_NEWS_SET,
   NOTIFICATIONS_INITIALIZED_KEY,
+  NOTIFICATIONS_PROCESS_LOCK,
   PUSH_SUBSCRIPTIONS_SET,
 } from "@/lib/notifications.server";
 import type { PushSubscriptionPayload } from "@/domain/notifications";
@@ -25,7 +26,18 @@ export async function GET(request: Request) {
     return NextResponse.json({ error: "Falta configuración VAPID." }, { status: 503 });
   }
 
+  let lockAcquired = false;
   try {
+    lockAcquired = Boolean(
+      await kv.set(NOTIFICATIONS_PROCESS_LOCK, new Date().toISOString(), {
+        nx: true,
+        ex: 240,
+      }),
+    );
+    if (!lockAcquired) {
+      return NextResponse.json({ ok: true, sent: 0, skipped: "proceso-en-curso" });
+    }
+
     webpush.setVapidDetails(env.vapidSubject, env.vapidPublicKey, env.vapidPrivateKey);
     const articles = await newsRepository.listArticles();
     const sourceAware = newsRepository as typeof newsRepository & Partial<DataSourceAware>;
@@ -86,5 +98,7 @@ export async function GET(request: Request) {
     return NextResponse.json({ ok: true, sent, articles: fresh.length });
   } catch {
     return NextResponse.json({ error: "No se pudieron procesar las novedades." }, { status: 503 });
+  } finally {
+    if (lockAcquired) await kv.del(NOTIFICATIONS_PROCESS_LOCK);
   }
 }

@@ -3,7 +3,14 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
 import { isIosDevice, isStandalone } from "@/lib/pwa";
 
-type NotificationStatus = "unsupported" | "default" | "granted" | "denied" | "subscribed" | "ios";
+type NotificationStatus =
+  | "unsupported"
+  | "default"
+  | "granted"
+  | "denied"
+  | "subscribed"
+  | "ios"
+  | "error";
 
 interface NotificationContextValue {
   status: NotificationStatus;
@@ -44,52 +51,63 @@ export function NotificationProvider({ children }: { children: ReactNode }) {
       return;
     }
 
-    void navigator.serviceWorker.ready.then(async (registration) => {
-      const subscription = await registration.pushManager.getSubscription();
-      setStatus(subscription ? "subscribed" : "granted");
-    });
+    void navigator.serviceWorker.ready
+      .then(async (registration) => {
+        const subscription = await registration.pushManager.getSubscription();
+        setStatus(subscription ? "subscribed" : "granted");
+      })
+      .catch(() => setStatus("error"));
   }, []);
 
   const subscribe = useCallback(async () => {
     if (!PUBLIC_KEY || !("Notification" in window) || !("serviceWorker" in navigator)) return;
-    const permission = await Notification.requestPermission();
-    if (permission !== "granted") {
-      setStatus("denied");
-      sessionStorage.setItem("mr_notifications_dismissed", "1");
-      return;
+    try {
+      const permission = await Notification.requestPermission();
+      if (permission !== "granted") {
+        setStatus("denied");
+        sessionStorage.setItem("mr_notifications_dismissed", "1");
+        return;
+      }
+
+      const registration = await navigator.serviceWorker.ready;
+      const subscription =
+        (await registration.pushManager.getSubscription()) ??
+        (await registration.pushManager.subscribe({
+          userVisibleOnly: true,
+          applicationServerKey: decodePublicKey(PUBLIC_KEY),
+        }));
+
+      const response = await fetch("/api/notificaciones/suscripcion", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(subscription.toJSON()),
+      });
+      if (!response.ok) throw new Error("No se pudo registrar la suscripción.");
+      setStatus("subscribed");
+    } catch {
+      setStatus("error");
     }
-
-    const registration = await navigator.serviceWorker.ready;
-    const subscription =
-      (await registration.pushManager.getSubscription()) ??
-      (await registration.pushManager.subscribe({
-        userVisibleOnly: true,
-        applicationServerKey: decodePublicKey(PUBLIC_KEY),
-      }));
-
-    const response = await fetch("/api/notificaciones/suscripcion", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(subscription.toJSON()),
-    });
-    if (!response.ok) throw new Error("No se pudo registrar la suscripción.");
-    setStatus("subscribed");
   }, []);
 
   const unsubscribe = useCallback(async () => {
-    const registration = await navigator.serviceWorker.ready;
-    const subscription = await registration.pushManager.getSubscription();
-    if (!subscription) {
+    try {
+      const registration = await navigator.serviceWorker.ready;
+      const subscription = await registration.pushManager.getSubscription();
+      if (!subscription) {
+        setStatus("granted");
+        return;
+      }
+      const response = await fetch("/api/notificaciones/suscripcion", {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ endpoint: subscription.endpoint }),
+      });
+      if (!response.ok) throw new Error("No se pudo eliminar la suscripción.");
+      await subscription.unsubscribe();
       setStatus("granted");
-      return;
+    } catch {
+      setStatus("error");
     }
-    await fetch("/api/notificaciones/suscripcion", {
-      method: "DELETE",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ endpoint: subscription.endpoint }),
-    });
-    await subscription.unsubscribe();
-    setStatus("granted");
   }, []);
 
   const value = useMemo(() => ({ status, subscribe, unsubscribe }), [status, subscribe, unsubscribe]);
