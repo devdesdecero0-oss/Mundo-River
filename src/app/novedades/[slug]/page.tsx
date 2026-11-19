@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { NewsCard, CategoryPill } from "@/components/news/news-card";
+import { NewsCard, CategoryPill, NewsBrandMark } from "@/components/news/news-card";
 import { LocalDate } from "@/components/ui/local-date";
 import { computeReadingTime, getRelatedArticles, sortNews } from "@/domain/news";
 import { newsRepository } from "@/data/repositories";
@@ -143,6 +143,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
             unoptimized
             className="h-full w-full object-cover"
           />
+          <NewsBrandMark />
         </div>
 
         {isAggregator ? (

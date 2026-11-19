@@ -27,6 +27,14 @@ export function CategoryPill({
   );
 }
 
+export function NewsBrandMark() {
+  return (
+    <span className="absolute bottom-3 right-3 z-10 rounded-full bg-inverse/80 px-2.5 py-1 text-[0.58rem] font-bold uppercase tracking-[0.16em] text-white">
+      Mundo River
+    </span>
+  );
+}
+
 export function NewsCard({
   article,
   featured = false,
@@ -57,6 +65,7 @@ export function NewsCard({
             className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-inverse/45 via-transparent to-transparent" aria-hidden="true" />
+          <NewsBrandMark />
           <div className="absolute left-3 top-3">
             <CategoryPill category={article.category} />
           </div>

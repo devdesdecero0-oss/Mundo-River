@@ -17,7 +17,7 @@ Memoria del proyecto entre sesiones. Máximo ~50 líneas: resume o elimina lo qu
 - Plantel: cada actuación muestra la ronda como `Fecha N` y el cruce completo (`River Plate vs rival` o `rival vs River Plate`) con su resultado.
 - Amistosos: los eventos de Bzzoiro con competición `friendly` se registran y muestran, pero quedan excluidos de puntajes, promedios, partidos evaluados y demás números del plantel.
 - Notificaciones: Push explícito para novedades, suscripciones en Vercel KV, procesamiento por GitHub Actions cada 5 minutos, lock distribuido y deduplicación por enlace original; el control desaparece con suscripción activa y sincroniza pestañas vía `BroadcastChannel`; Brave muestra diagnóstico para Shields/mensajería Push; requiere `VAPID_PUBLIC_KEY`, `NEXT_PUBLIC_VAPID_PUBLIC_KEY`, `VAPID_PRIVATE_KEY`, `VAPID_SUBJECT`, `CRON_SECRET` y credenciales KV.
-- Novedades: las portadas SVG de categorías no duplican la leyenda “MUNDO RIVER”, porque el recorte `object-cover` la superponía con las etiquetas de categoría.
+- Novedades: la marca “MUNDO RIVER” se renderiza como overlay fijo en las portadas, no dentro de los SVG, para que sea visible también en tarjetas pequeñas sin superponerse con las etiquetas.
 - Tema claro: superficies blancas, texto primario rojo oscuro legible, controles activos rojos y estados finalizados grises; el modo oscuro conserva sus tokens actuales.
 - Suite: 217 tests unitarios y 36 E2E en verde; lint, typecheck y build limpios.
 - Detalle real validado: `/partidos/bzzoiro:event:654311` (River vs Lanús, 22/11/2026) muestra previa, formaciones y calificaciones.
