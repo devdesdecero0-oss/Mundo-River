@@ -8,7 +8,7 @@
  *
  * Al cambiar cualquiera de estas reglas hay que subir CACHE_VERSION.
  */
-const CACHE_VERSION = "v1";
+const CACHE_VERSION = "v2";
 const CACHE_PREFIX = "mr-";
 const SHELL_CACHE = `${CACHE_PREFIX}shell-${CACHE_VERSION}`;
 const PAGES_CACHE = `${CACHE_PREFIX}pages-${CACHE_VERSION}`;
@@ -101,6 +101,44 @@ self.addEventListener("message", (event) => {
   if (event.data && event.data.type === "SKIP_WAITING") {
     self.skipWaiting();
   }
+});
+
+self.addEventListener("push", (event) => {
+  event.waitUntil(
+    (async () => {
+      let data = {};
+      try {
+        data = event.data ? event.data.json() : {};
+      } catch {
+        data = { title: "Mundo River", body: "Hay una novedad nueva." };
+      }
+
+      await self.registration.showNotification(data.title || "Mundo River", {
+        body: data.body || "Hay una novedad nueva de River.",
+        icon: "/icons/icon-192.png",
+        badge: "/icons/icon-192.png",
+        data: { url: data.url || "/novedades" },
+        tag: data.url || "mundo-river-novedad",
+      });
+    })(),
+  );
+});
+
+self.addEventListener("notificationclick", (event) => {
+  event.notification.close();
+  const target = event.notification.data?.url || "/novedades";
+  event.waitUntil(
+    (async () => {
+      const clients = await self.clients.matchAll({ type: "window", includeUncontrolled: true });
+      const existing = clients.find((client) => "focus" in client);
+      if (existing) {
+        await existing.focus();
+        if ("navigate" in existing) await existing.navigate(new URL(target, self.location.origin).toString());
+        return;
+      }
+      await self.clients.openWindow(new URL(target, self.location.origin).toString());
+    })(),
+  );
 });
 
 function isRscRequest(request, url) {

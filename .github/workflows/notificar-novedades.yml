@@ -1,0 +1,19 @@
+name: Notificar novedades
+
+on:
+  schedule:
+    - cron: "*/5 * * * *"
+  workflow_dispatch:
+
+jobs:
+  procesar-novedades:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Consultar novedades nuevas
+        env:
+          CRON_SECRET: ${{ secrets.MUNDO_RIVER_CRON_SECRET }}
+        run: |
+          curl --fail --silent --show-error \
+            --request GET \
+            --header "Authorization: Bearer ${CRON_SECRET}" \
+            "https://mundo-river.vercel.app/api/notificaciones/procesar"

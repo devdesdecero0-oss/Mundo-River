@@ -9,6 +9,7 @@ import "./globals.css";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
 import { PwaProvider } from "@/components/providers/pwa-provider";
+import { NotificationProvider } from "@/components/providers/notification-provider";
 import { ThemeProvider } from "@/components/providers/theme-provider";
 import { TimeZoneProvider } from "@/components/providers/time-zone-provider";
 import { OfflineBanner } from "@/components/ui/offline-banner";
@@ -86,7 +87,8 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         </Script>
         <ThemeProvider initialTheme={theme}>
           <PwaProvider>
-            <TimeZoneProvider initialTimeZone={timeZone}>
+            <NotificationProvider>
+              <TimeZoneProvider initialTimeZone={timeZone}>
               <a
                 href="#contenido"
                 className="sr-only z-[100] rounded-md bg-river px-4 py-2 font-semibold text-white focus:not-sr-only focus:fixed focus:left-4 focus:top-4"
@@ -98,7 +100,8 @@ export default async function RootLayout({ children }: { children: React.ReactNo
               <SiteFooter />
               <OfflineBanner />
               <UpdateBanner />
-            </TimeZoneProvider>
+              </TimeZoneProvider>
+            </NotificationProvider>
           </PwaProvider>
         </ThemeProvider>
       </body>

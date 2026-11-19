@@ -46,4 +46,17 @@ describe("env — configuración del servidor", () => {
   it("usa los feeds por defecto si no hay configuración", () => {
     expect(readServerEnv({}).newsFeeds).toEqual([...DEFAULT_NEWS_FEEDS]);
   });
+
+  it("lee la configuración opcional de notificaciones", () => {
+    const env = readServerEnv({
+      VAPID_PUBLIC_KEY: "public",
+      VAPID_PRIVATE_KEY: "private",
+      VAPID_SUBJECT: "mailto:admin@example.com",
+      CRON_SECRET: "secret",
+    });
+    expect(env.vapidPublicKey).toBe("public");
+    expect(env.vapidPrivateKey).toBe("private");
+    expect(env.vapidSubject).toBe("mailto:admin@example.com");
+    expect(env.cronSecret).toBe("secret");
+  });
 });

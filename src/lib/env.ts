@@ -19,12 +19,20 @@ const envSchema = z.object({
     errorMap: () => ({ message: "DATA_MODE debe ser 'mock' o 'live'" }),
   }).optional(),
   NEWS_FEEDS: z.string().optional(),
+  VAPID_PUBLIC_KEY: z.string().trim().optional(),
+  VAPID_PRIVATE_KEY: z.string().trim().optional(),
+  VAPID_SUBJECT: z.string().trim().url().optional(),
+  CRON_SECRET: z.string().trim().optional(),
 });
 
 export interface ServerEnv {
   dataMode: DataMode;
   bzzoiroToken: string | null;
   newsFeeds: string[];
+  vapidPublicKey: string | null;
+  vapidPrivateKey: string | null;
+  vapidSubject: string | null;
+  cronSecret: string | null;
 }
 
 type EnvSource = Record<string, string | undefined>;
@@ -41,6 +49,10 @@ export function readServerEnv(source: EnvSource = process.env): ServerEnv {
     BZZOIRO_TOKEN: normalize(source.BZZOIRO_TOKEN),
     DATA_MODE: normalize(source.DATA_MODE)?.toLowerCase(),
     NEWS_FEEDS: normalize(source.NEWS_FEEDS),
+    VAPID_PUBLIC_KEY: normalize(source.VAPID_PUBLIC_KEY),
+    VAPID_PRIVATE_KEY: normalize(source.VAPID_PRIVATE_KEY),
+    VAPID_SUBJECT: normalize(source.VAPID_SUBJECT),
+    CRON_SECRET: normalize(source.CRON_SECRET),
   });
 
   if (!parsed.success) {
@@ -56,6 +68,10 @@ export function readServerEnv(source: EnvSource = process.env): ServerEnv {
     dataMode,
     bzzoiroToken: token,
     newsFeeds: feeds.length > 0 ? feeds : [...DEFAULT_NEWS_FEEDS],
+    vapidPublicKey: parsed.data.VAPID_PUBLIC_KEY ?? null,
+    vapidPrivateKey: parsed.data.VAPID_PRIVATE_KEY ?? null,
+    vapidSubject: parsed.data.VAPID_SUBJECT ?? null,
+    cronSecret: parsed.data.CRON_SECRET ?? null,
   };
 }
 

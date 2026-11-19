@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { ClubCrest } from "@/components/brand/club-crest";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
 import { InstallAppButton } from "@/components/ui/install-app-button";
+import { NotificationButton } from "@/components/ui/notification-button";
 import { NAV_ITEMS } from "@/lib/navigation";
 
 function isActive(pathname: string, href: string): boolean {
@@ -60,6 +61,7 @@ export function SiteHeader() {
 
         <div className="flex items-center gap-2">
           <ThemeToggle />
+          <NotificationButton />
           <InstallAppButton />
           <Link href="/calendario" className="btn btn-ink hidden text-sm md:inline-flex">
             Match Center
@@ -110,6 +112,7 @@ export function SiteHeader() {
               );
             })}
             <InstallAppButton variant="menu" />
+            <NotificationButton variant="menu" />
             <Link href="/calendario" className="btn btn-ink mt-3">
               Ir al Match Center
             </Link>
