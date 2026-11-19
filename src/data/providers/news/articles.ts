@@ -24,10 +24,10 @@ const CATEGORY_PATTERNS: Array<{ category: NewsCategory; pattern: RegExp }> = [
 ];
 
 const COVER_BY_CATEGORY: Record<NewsCategory, string> = {
-  "plantel-profesional": "/images/news/plantel.svg",
-  inferiores: "/images/news/inferiores.svg",
-  institucional: "/images/news/institucional.svg",
-  "mercado-de-pases": "/images/news/mercado.svg",
+  "plantel-profesional": "/images/news/plantel.svg?v=2",
+  inferiores: "/images/news/inferiores.svg?v=2",
+  institucional: "/images/news/institucional.svg?v=2",
+  "mercado-de-pases": "/images/news/mercado.svg?v=2",
 };
 
 export function mentionsRiver(...values: Array<string | undefined>): boolean {

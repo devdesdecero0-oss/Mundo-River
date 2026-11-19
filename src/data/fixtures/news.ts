@@ -8,10 +8,10 @@ function ago(hours: number): string {
 }
 
 const covers = {
-  plantel: "/images/news/plantel.svg",
-  inferiores: "/images/news/inferiores.svg",
-  institucional: "/images/news/institucional.svg",
-  mercado: "/images/news/mercado.svg",
+  plantel: "/images/news/plantel.svg?v=2",
+  inferiores: "/images/news/inferiores.svg?v=2",
+  institucional: "/images/news/institucional.svg?v=2",
+  mercado: "/images/news/mercado.svg?v=2",
 } as const;
 
 export const NEWS_ARTICLES: NewsArticle[] = [

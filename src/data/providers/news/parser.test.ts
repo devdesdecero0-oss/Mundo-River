@@ -84,7 +84,7 @@ describe("RSS — filtro y clasificación", () => {
     </channel></rss>`));
     expect(article).toMatchObject({
       category: "mercado-de-pases",
-      coverImage: "/images/news/mercado.svg",
+      coverImage: "/images/news/mercado.svg?v=2",
       externalUrl: "https://example.com/9",
     });
   });
