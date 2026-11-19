@@ -8,7 +8,7 @@
  *
  * Al cambiar cualquiera de estas reglas hay que subir CACHE_VERSION.
  */
-const CACHE_VERSION = "v2";
+const CACHE_VERSION = "v3";
 const CACHE_PREFIX = "mr-";
 const SHELL_CACHE = `${CACHE_PREFIX}shell-${CACHE_VERSION}`;
 const PAGES_CACHE = `${CACHE_PREFIX}pages-${CACHE_VERSION}`;

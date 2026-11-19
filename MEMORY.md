@@ -39,7 +39,7 @@ Memoria del proyecto entre sesiones. Máximo ~50 líneas: resume o elimina lo qu
 - PWA: navegación network-first (últimas 20 páginas), assets cache-first, y RSC/`/api/`/POST/cross-origin fuera de la caché.
 - PWA: el fallback redirige a `/offline` (no sirve su HTML en otra URL) y precachea los chunks que referencia el HTML.
 - PWA: actualización con aviso “Actualizar” + `SKIP_WAITING`; nunca recarga automática. iOS usa instrucciones manuales.
-- PWA: `public/sw.js` muestra Push con título/fuente y abre la URL de la novedad; `CACHE_VERSION` quedó en `v2`.
+- PWA: `public/sw.js` muestra Push con título/fuente y abre la URL de la novedad; `CACHE_VERSION` quedó en `v3` para invalidar cachés anteriores tras los ajustes de notificaciones.
 - `SITE_URL`: `NEXT_PUBLIC_SITE_URL` → `https://${VERCEL_PROJECT_PRODUCTION_URL}` → placeholder; solo en `src/lib/site.server.ts`.
 
 ## Aprendizajes y errores a evitar
