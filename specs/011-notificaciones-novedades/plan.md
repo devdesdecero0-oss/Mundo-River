@@ -15,3 +15,5 @@ fecha: 2026-11-18
 5. Integrar control explícito en header y menú móvil.
 6. Agregar GitHub Actions como cron externo cada cinco minutos, porque la cuenta Hobby de Vercel no admite cron frecuentes.
 7. Cubrir permisos, deduplicación, API, service worker y E2E.
+8. Ocultar el control con suscripción activa y sincronizarlo entre pestañas.
+9. Detectar Brave y explicar errores de permisos, Service Worker o suscripción Push.

@@ -1,13 +1,19 @@
 "use client";
 
 import { useState } from "react";
+import {
+  notificationErrorMessage,
+  shouldShowNotificationControl,
+} from "@/domain/notifications";
 import { useNotifications } from "@/components/providers/notification-provider";
 
 export function NotificationButton({ variant = "header" }: { variant?: "header" | "menu" }) {
-  const { status, subscribe, unsubscribe } = useNotifications();
+  const { status, errorReason, subscribe } = useNotifications();
   const [busy, setBusy] = useState(false);
 
-  if (status === "unsupported" || status === "denied") return null;
+  if (!shouldShowNotificationControl(status)) {
+    if (status !== "ios") return null;
+  }
   if (status === "ios") {
     return (
       <span
@@ -25,33 +31,45 @@ export function NotificationButton({ variant = "header" }: { variant?: "header" 
   async function toggle() {
     setBusy(true);
     try {
-      if (status === "subscribed") await unsubscribe();
-      else await subscribe();
+      await subscribe();
     } finally {
       setBusy(false);
     }
   }
 
-  const label =
-    status === "subscribed" ? "Desactivar notificaciones" : "Activar notificaciones";
+  const label = "Activar notificaciones";
+  const errorMessage = errorReason ? notificationErrorMessage(errorReason) : null;
   const className =
     variant === "menu"
       ? "flex min-h-12 w-full items-center justify-between rounded-xl px-3 text-left font-display text-lg font-semibold uppercase tracking-wide text-ink"
       : "inline-flex h-10 items-center gap-2 rounded-full border border-ink/15 px-3 text-xs font-bold uppercase tracking-wide text-ink-muted hover:border-river hover:text-river-ink";
 
-  return (
+  const button = (
     <button type="button" className={className} onClick={() => void toggle()} disabled={busy} aria-label={label}>
       <span aria-hidden="true">♧</span>
       <span>
         {busy
           ? "Procesando…"
-          : status === "subscribed"
-            ? "Notificaciones activas"
-            : status === "error"
-              ? "Reintentar avisos"
-              : "Activar avisos"}
+          : status === "error"
+            ? "Reintentar avisos"
+            : "Activar avisos"}
       </span>
       {variant === "menu" ? <span aria-hidden="true">→</span> : null}
     </button>
+  );
+
+  if (variant === "menu" && errorMessage) {
+    return (
+      <div className="space-y-2 px-3 py-3">
+        <p className="text-sm leading-relaxed text-ink-muted">{errorMessage}</p>
+        {button}
+      </div>
+    );
+  }
+
+  return (
+    <span title={errorMessage ?? undefined}>
+      {button}
+    </span>
   );
 }

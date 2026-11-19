@@ -63,7 +63,7 @@ Plataforma web moderna, interactiva y responsive orientada a los hinchas de Rive
 - **Manejo de fechas locales:** Las fechas y horarios de los partidos deben procesarse y mostrarse siempre en la zona horaria local del usuario (`AAAA-MM-DD` y hora local). Nunca convertir fechas de partidos a UTC puro sin ajuste local, ya que un partido nocturno en Argentina puede figurar con la fecha del día siguiente.
 - **Estados de partido:** Un partido solo admite tres estados válidos: `Próximo`, `En Vivo` y `Finalizado`. La ficha técnica completa (calificaciones e incidencias) solo debe habilitarse cuando el estado sea `Finalizado` o `En Vivo`.
 - **Escala de calificaciones:** El rendimiento individual de jugadores y DT se evalúa estrictamente en una escala numérica del `1` al `10` (con hasta 1 decimal para promedios).
-- **Notificaciones:** El permiso Push se solicita solo mediante acción explícita; las claves privadas VAPID y los secretos de almacenamiento permanecen en servidor; el service worker debe incrementar `CACHE_VERSION` al cambiar su comportamiento.
+- **Notificaciones:** El permiso Push se solicita solo mediante acción explícita; las claves privadas VAPID y los secretos de almacenamiento permanecen en servidor; el service worker debe incrementar `CACHE_VERSION` al cambiar su comportamiento; con una suscripción activa no se muestra el control de activación y las pestañas sincronizan su estado; los errores de Brave deben mostrar instrucciones accionables.
 
 ## Forma de trabajar
 - **Flujo SDD obligatorio:** Antes de escribir código para una funcionalidad nueva, verificar o redactar su especificación en `specs/<numero>-<nombre>/spec.md`, seguida del plan técnico (`plan.md`) y el desglose de tareas (`tasks.md`).

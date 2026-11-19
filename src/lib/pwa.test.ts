@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import {
   isIosDevice,
+  isBraveBrowser,
   isStandalone,
   resolveInstallMode,
   shouldRegisterServiceWorker,
@@ -56,6 +57,12 @@ describe("pwa — detección de plataforma", () => {
         5,
       ),
     ).toBe(false);
+  });
+
+  it("detecta Brave mediante su API o user agent", () => {
+    expect(isBraveBrowser("Mozilla/5.0 Chrome/120.0", true)).toBe(true);
+    expect(isBraveBrowser("Mozilla/5.0 Brave/1.64.0", false)).toBe(true);
+    expect(isBraveBrowser("Mozilla/5.0 Chrome/120.0", false)).toBe(false);
   });
 });
 

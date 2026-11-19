@@ -1,5 +1,11 @@
 import { describe, expect, it } from "vitest";
-import { isPushSubscriptionPayload, notificationKey, selectUnnotifiedArticles } from "@/domain/notifications";
+import {
+  isPushSubscriptionPayload,
+  notificationKey,
+  notificationErrorMessage,
+  selectUnnotifiedArticles,
+  shouldShowNotificationControl,
+} from "@/domain/notifications";
 import type { NewsArticle } from "@/domain/types";
 
 const article: NewsArticle = {
@@ -35,5 +41,21 @@ describe("notificaciones de novedades", () => {
       }),
     ).toBe(true);
     expect(isPushSubscriptionPayload({ endpoint: "http://inseguro", keys: {} })).toBe(false);
+  });
+
+  it("oculta el control cuando ya existe una suscripción activa", () => {
+    expect(shouldShowNotificationControl("subscribed")).toBe(false);
+    expect(shouldShowNotificationControl("default")).toBe(true);
+    expect(shouldShowNotificationControl("granted")).toBe(true);
+    expect(shouldShowNotificationControl("error")).toBe(true);
+    expect(shouldShowNotificationControl("denied")).toBe(false);
+    expect(shouldShowNotificationControl("ios")).toBe(false);
+    expect(shouldShowNotificationControl("unsupported")).toBe(false);
+  });
+
+  it("distingue las causas técnicas que la interfaz puede explicar", () => {
+    expect(notificationErrorMessage("brave-settings")).toContain("Shields");
+    expect(notificationErrorMessage("service-worker")).toContain("Service Worker");
+    expect(notificationErrorMessage("subscription")).toContain("registrar");
   });
 });

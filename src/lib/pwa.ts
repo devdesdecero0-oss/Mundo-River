@@ -16,6 +16,11 @@ export function isIosDevice(
   return /macintel|macintosh/i.test(platform) && maxTouchPoints > 1;
 }
 
+/** Detecta Brave sin depender de que el navegador incluya su marca en el UA. */
+export function isBraveBrowser(userAgent: string, hasBraveApi: boolean): boolean {
+  return hasBraveApi || /\bBrave\//i.test(userAgent);
+}
+
 export type InstallMode = "installed" | "prompt" | "ios" | "none";
 
 /**
