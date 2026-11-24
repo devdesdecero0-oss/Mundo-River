@@ -43,7 +43,7 @@ jobs:
           GMAIL_USER: ${{ secrets.GMAIL_USER }}
           GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
           REPORT_EMAIL: ${{ secrets.REPORT_EMAIL }}
-          REPORT_FILE: reports/diarios/auditoria-${{ format('{0,date,yyyy-MM-dd}', github.event.head_commit.timestamp) }}.md
+
         run: |
           python3 - <<'PY'
           import os
